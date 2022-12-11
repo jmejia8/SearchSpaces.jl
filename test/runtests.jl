@@ -32,7 +32,7 @@ using SearchSpaces
         bounds = Bounds(lb = [0, -5], ub = [10, 5])
         perms  = Permutations(5)
         bits   = BitArrays(dim = 3)
-        ss = SearchSpace(:x => bounds,
+        ss = MixedSpace(:x => bounds,
                          :y => perms,
                          :z => bits
                         ) 
