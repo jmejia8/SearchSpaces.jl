@@ -5,12 +5,22 @@ struct Bounds{T} <: AtomicSearchSpace
     rigid::Bool
 end
 
+function _valid_bounds(lb, ub)
+    if length(lb) != length(ub) || any(lb .> ub)
+        return false
+    end
+
+    true
+end
+
 """
     Bounds(;lb, ub, rigid=true)
 
 Define a search space delimited by box constraints.
 """
-function Bounds(;lb::AbstractVector = zeros(0), ub=zeros(0), rigid=true)
+function Bounds(;lb::AbstractVector = zeros(0), ub::AbstractVector=zeros(0), rigid=true)
+    @assert _valid_bounds(lb, ub) "Check size of lb and ub, and also lb[i] <= ub[i]."
+
     Bounds(lb, ub, length(lb), rigid)
 end
 

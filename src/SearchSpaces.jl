@@ -4,20 +4,8 @@ import Random
 
 abstract type AbstractSearchSpace end
 abstract type AtomicSearchSpace <: AbstractSearchSpace end
-abstract type AbstractSampler end
 
-struct RandomInDomain{R} <: AbstractSampler
-    sample_size::Int
-    rng::R
-end
-
-RandomInDomain(sample_size; rng = Random.default_rng()) = RandomInDomain(sample_size, rng)
-
-struct Grid <: AbstractSampler
-    npartitions::Int
-    dim::Int
-end
-
+include("samplers.jl")
 include("BitArrays.jl")
 include("Bounds.jl")
 include("Permutations.jl")
