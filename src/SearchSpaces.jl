@@ -6,9 +6,9 @@ abstract type AbstractSearchSpace end
 abstract type AtomicSearchSpace <: AbstractSearchSpace end
 
 include("samplers.jl")
-include("BitArrays.jl")
-include("Bounds.jl")
-include("Permutations.jl")
+include("bitarrays.jl")
+include("bounds.jl")
+include("permutations.jl")
 
 export BitArrays, Bounds, Permutations, MixedSpace, Grid, cardinality, RandomInDomain
 export sample, isinbounds, ispermutation
