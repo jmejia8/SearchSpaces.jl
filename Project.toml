@@ -2,3 +2,7 @@ name = "SearchSpaces"
 uuid = "eb7571c6-2196-4f03-99b8-52a5a35b3163"
 authors = ["Jesus Mejia <jesusmejded@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
