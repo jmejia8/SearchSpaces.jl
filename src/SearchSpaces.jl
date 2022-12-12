@@ -9,9 +9,10 @@ include("samplers.jl")
 include("bitarrays.jl")
 include("bounds.jl")
 include("permutations.jl")
+include("variable.jl")
 
 export BitArrays, Bounds, Permutations, MixedSpace, Grid, cardinality, RandomInDomain
-export sample, isinbounds, ispermutation
+export sample, isinbounds, ispermutation, Variable, @var
 
 struct MixedSpace{D, M} <: AbstractSearchSpace
     domain::D
@@ -37,7 +38,8 @@ end
 
 function Base.show(io::IO, searchspace::MixedSpace)
     ks = keys(searchspace.domain)
-    println(io, "MixedSpace with ", length(ks), " variables:")
+    print(io, "MixedSpace defined by ", length(ks), " ")
+    length(ks) != 1 ? println(io, "subspaces:") : println(io, "subspace:")
     for k in ks
         println(io, k, " => ", searchspace.domain[k])
     end
