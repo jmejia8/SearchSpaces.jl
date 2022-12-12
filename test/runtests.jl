@@ -41,6 +41,26 @@ using SearchSpaces
         @test sample(RandomInDomain(10), ss) isa Dict
     end
 
+    @testset "Variables" begin
+
+        for searchspace in [
+                            Permutations(11),
+                            BitArrays(7),
+                            Bounds(lb = zeros(5), ub = ones(5))
+                           ]
+
+            x = Variable(:x, searchspace)
+            @test x isa Variable
+            @test x.searchspace == searchspace
+
+            @var y in searchspace
+            @test y isa Variable
+            @test y.name === :y
+            @test y.searchspace == searchspace
+        end
+
+    end
+
 
 
 end
