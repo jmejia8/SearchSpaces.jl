@@ -21,6 +21,7 @@ function Permutations(perm_size::Integer = 0; values = collect(1:perm_size))
     Permutations(collect(1:perm_size), values, perm_size)
 end
 
+#=
 function sample(parameters::RandomInDomain, searchspace::Permutations)
     D = searchspace.dim
     X = zeros(Int, parameters.sample_size, D)
@@ -29,6 +30,12 @@ function sample(parameters::RandomInDomain, searchspace::Permutations)
         X[i,:] = Random.shuffle(parameters.rng, 1:D)
     end
     X
+end
+=#
+
+function value(sampler::Sampler{R, P}) where {R<:AtRandom, P<:Permutations}
+    parameters = sampler.method
+    Random.shuffle(parameters.rng, sampler.searchspace.values)
 end
 
 function cardinality(searchspace::Permutations)
@@ -46,3 +53,11 @@ function ispermutation(x::AbstractVector{<:Integer}, searchspace::Permutations)
     mask[x] .= true
     all(mask)
 end
+
+
+function Grid(searchspace::Permutations; npartitions = 0)
+    it = Combinatorics.permutations(searchspace.values)
+    Sampler(Grid(npartitions, (it, nothing)), searchspace)
+end
+
+isinspace(x, searchspace::Permutations) = ispermutation(x, searchspace)

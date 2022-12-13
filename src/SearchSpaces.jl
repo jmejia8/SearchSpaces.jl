@@ -1,6 +1,7 @@
 module SearchSpaces
 
 import Random
+import Combinatorics
 
 abstract type AbstractSearchSpace end
 abstract type AtomicSearchSpace <: AbstractSearchSpace end
@@ -12,7 +13,7 @@ include("permutations.jl")
 include("variable.jl")
 
 export BitArrays, Bounds, Permutations, MixedSpace, Grid, cardinality, RandomInDomain
-export sample, isinbounds, ispermutation, Variable, @var
+export  isinbounds, ispermutation, Variable, @var, AtRandom, isinspace
 
 struct MixedSpace{D, M} <: AbstractSearchSpace
     domain::D
@@ -46,17 +47,28 @@ function Base.show(io::IO, searchspace::MixedSpace)
 end
 
 
+#=
 function sample(parameters::RandomInDomain, searchspace::MixedSpace)
     Dict(
          k => sample(parameters, searchspace.domain[k])
          for k in keys(searchspace.domain)
         )
 end
+=#
 
 
 
 function cardinality(searchspace::MixedSpace)
     prod(cardinality(searchspace.domain[k]) for k in keys(searchspace.domain))
+end
+
+
+function getdim(searchspace::AtomicSearchSpace)
+    searchspace.dim
+end
+
+function getdim(searchspace::MixedSpace)
+    sum(getdim(searchspace.domain[k]) for k in keys(searchspace.domain))
 end
 
 end # module
