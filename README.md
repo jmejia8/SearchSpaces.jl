@@ -13,6 +13,5 @@ Implemented search spaces:
 
 ## API
 
-- `sample`: for sampling values in search space.
 - `cardinality`: to get the cardinality of the search space.
 - `AtomicSearchSpace` is an abstract type to define primitive search spaces.
