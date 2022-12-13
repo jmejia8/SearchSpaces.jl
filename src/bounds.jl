@@ -49,10 +49,17 @@ end
 isinspace(x, searchspace::Bounds) = isinbounds(x, searchspace)
 
 function _get_random(bounds::Bounds{<:Integer}, rng)
+    if getdim(bounds) == 1
+        return rand(rng, bounds.lb[1]:bounds.ub[1])
+    end
+
     [rand(rng, a:b) for (a, b) in zip(bounds.lb, bounds.ub)]
 end
 
 function _get_random(bounds::Bounds, rng)
+    if getdim(bounds) == 1
+        return bounds.lb[1] + bounds.Δ[1] .* rand(rng)
+    end
     bounds.lb + bounds.Δ .* rand(rng, getdim(bounds))
 end
 
