@@ -4,6 +4,7 @@ using SearchSpaces
 const AVAILABLE_SPACES = [
                   Permutations(11),
                   BitArrays(7),
+                  Bounds(lb = 1.1, ub = 4.1),
                   Bounds(lb = zeros(5), ub = ones(5)),
                   Bounds(lb = fill(-10, 9), ub = fill(10, 9)),
                   Bounds(lb = zeros(5), ub = ones(5), rigid=false),

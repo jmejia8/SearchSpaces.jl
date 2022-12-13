@@ -19,10 +19,19 @@ end
 
 Define a search space delimited by box constraints.
 """
-function Bounds(;lb::AbstractVector = zeros(0), ub::AbstractVector=zeros(0), rigid=true)
+function Bounds(lb::AbstractVector, ub::AbstractVector; rigid=true)
     @assert _valid_bounds(lb, ub) "Check size of lb and ub, and also lb[i] <= ub[i]."
 
     Bounds(lb, ub, ub - lb, length(lb), rigid)
+end
+
+function Bounds(;lb = zeros(0), ub = zeros(0), rigid=true)
+    Bounds(lb, ub; rigid)
+end
+
+function Bounds(lb::Real, ub::Real; rigid=true)
+    lb, ub = promote(lb, ub)
+    Bounds([lb], [ub]; rigid)
 end
 
 function cardinality(searchspace::Bounds{T}) where T <: Integer

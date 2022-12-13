@@ -51,6 +51,10 @@ function value(sampler::Sampler{G, S}) where {G<:Grid,S<:AtomicSearchSpace}
     val, next = res
     
     sampler.method.iterator = (it, next)
+    if length(val) == 1
+        return val[1]
+    end
+    
     [v for v in val]
 end
 
