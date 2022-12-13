@@ -18,7 +18,6 @@ const AVAILABLE_SPACES = [
     @testset "Bounds" begin
         bounds = Bounds(lb = [0, -5], ub = [10, 5])
         @test cardinality(bounds) == 11*11
-        #@test size(sample(RandomInDomain(10), bounds)) == (10,2)
 
         bounds_c = Bounds(lb = [-1.0, -1.0], ub = [3.0, 2.0])
         @test !isfinite(cardinality(bounds_c))
@@ -29,7 +28,6 @@ const AVAILABLE_SPACES = [
     @testset "Permutations" begin
         perms  = Permutations(5)
         @test cardinality(perms)  == prod(2:5)
-        #@test size(sample(RandomInDomain(10), perms)) == (10,5)
         @test ispermutation(1:perms.dim, perms)
         @test !ispermutation(ones(Int, 5), perms)
     end
@@ -37,7 +35,6 @@ const AVAILABLE_SPACES = [
     @testset "BitArrays" begin
         bits   = BitArrays(dim = 3)
         @test cardinality(bits)   == 8
-        #@test size(sample(RandomInDomain(10), bits)) == (10, 3)
     end
 
     @testset "SearchSpace" begin
@@ -50,7 +47,6 @@ const AVAILABLE_SPACES = [
                         ) 
 
         @test cardinality(ss) == 11*11*prod(1:5)*8
-        #@test sample(RandomInDomain(10), ss) isa Dict
     end
 
     @testset "Variables" begin
@@ -68,9 +64,9 @@ const AVAILABLE_SPACES = [
     end
 
     @testset "Samplers" begin
-
-        # sm =  
-
+        @test length(collect(Grid(BitArrays(3)))) == length(Grid(BitArrays(3)))
+        @test length(collect(Grid(Permutations(3)))) == length(Grid(Permutations(3)))
+        @test length(collect(Grid(Bounds(lb=[-1.0, -1],ub=[1.0, 3])))) == length(Grid(Bounds(lb=[-1.0, -1],ub=[1, 3.0])))
         for sampler in [Grid, AtRandom]
             for searchspace in AVAILABLE_SPACES
                 # sample at most 3 elements

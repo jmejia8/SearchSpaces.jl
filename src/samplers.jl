@@ -54,3 +54,8 @@ function value(sampler::Sampler{G, S}) where {G<:Grid,S<:AtomicSearchSpace}
     [v for v in val]
 end
 
+
+Base.length(sampler::Sampler{S, B}) where {S<:Grid,B} = sampler.len
+Base.size(sampler::Sampler{S, B}) where {S<:Grid,B} = (sampler.len,)
+Base.IsInfinite(sampler::Sampler{S, B}) where {S<:AtRandom,B} = true
+
