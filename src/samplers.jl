@@ -3,10 +3,10 @@ abstract type AbstractSampler end
 struct Sampler{M, S} <: AbstractSampler
     method::M
     searchspace::S
-    len::Union{Int, BigInt, Float64}
+    len::Union{Int, BigInt, Float64, BigFloat}
 end
 
-function Sampler(sampler, searchspace)
+function Sampler(sampler, searchspace::AtomicSearchSpace)
     Sampler(sampler, searchspace, cardinality(searchspace))
 end
 
@@ -18,15 +18,6 @@ function Base.iterate(S::Sampler, state=1)
 
     val, state + 1
 end
-
-#=
-struct RandomInDomain{R} <: AbstractSampler
-    sample_size::Int
-    rng::R
-end
-
-RandomInDomain(sample_size; rng = Random.default_rng()) = RandomInDomain(sample_size, rng)
-=#
 
 struct AtRandom{R} <: AbstractSampler
     rng::R
@@ -53,6 +44,7 @@ function value(sampler::Sampler{G, S}) where {G<:Grid,S<:AtomicSearchSpace}
 
     # last iteration?
     if isnothing(res)
+        sampler.method.iterator = (it, nothing)
         return nothing
     end
 

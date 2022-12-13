@@ -7,6 +7,10 @@ const AVAILABLE_SPACES = [
                   Bounds(lb = zeros(5), ub = ones(5)),
                   Bounds(lb = fill(-10, 9), ub = fill(10, 9)),
                   Bounds(lb = zeros(5), ub = ones(5), rigid=false),
+                  MixedSpace(:X => Permutations(3),
+                             :Y => BitArrays(3),
+                             :Z => Bounds(lb = zeros(2), ub = ones(2)),
+                            ) 
                  ]
 
 @testset "API" begin
@@ -64,11 +68,14 @@ const AVAILABLE_SPACES = [
     end
 
     @testset "Samplers" begin
+
+        # sm =  
+
         for sampler in [Grid, AtRandom]
             for searchspace in AVAILABLE_SPACES
-                for x in sampler(searchspace)
+                # sample at most 3 elements
+                for (x, _) in zip(sampler(searchspace), 1:3)
                     @test isinspace(x, searchspace)
-                    break
                 end
             end
         end
