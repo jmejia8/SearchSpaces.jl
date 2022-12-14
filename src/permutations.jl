@@ -21,21 +21,20 @@ function Permutations(perm_size::Integer = 0; values = collect(1:perm_size))
     Permutations(collect(1:perm_size), values, perm_size)
 end
 
-#=
-function sample(parameters::RandomInDomain, searchspace::Permutations)
-    D = searchspace.dim
-    X = zeros(Int, parameters.sample_size, D)
-    sample_size = parameters.sample_size
-    for i in 1:parameters.sample_size
-        X[i,:] = Random.shuffle(parameters.rng, 1:D)
-    end
-    X
+function Permutations(values::AbstractVector, perm_size = length(values))
+    @assert perm_size > 0 "Empty permutation is not allowed"
+    Permutations(collect(1:perm_size), values, perm_size)
 end
-=#
 
 function value(sampler::Sampler{R, P}) where {R<:AtRandom, P<:Permutations}
     parameters = sampler.method
-    Random.shuffle(parameters.rng, sampler.searchspace.values)
+    searchspace = sampler.searchspace
+    if searchspace.dim == length(searchspace.values)
+        return Random.shuffle(parameters.rng, searchspace.values)
+    end
+
+    # TODO improve this
+    Random.shuffle(parameters.rng, searchspace.values)[1:getdim(searchspace)]
 end
 
 function cardinality(searchspace::Permutations)
@@ -54,9 +53,29 @@ function ispermutation(x::AbstractVector{<:Integer}, searchspace::Permutations)
     all(mask)
 end
 
+function ispermutation(x::AbstractVector, searchspace::Permutations)
+    if length(x) != searchspace.dim
+        return false
+    end 
+
+    x = unique(x)
+    if length(x) != searchspace.dim
+        return false
+    end 
+
+    values = searchspace.values
+
+    for (i, v) in enumerate(x)
+        if v ∉ values
+            return false
+        end
+    end
+    true
+end
+
 
 function Grid(searchspace::Permutations; npartitions = 0)
-    it = Combinatorics.permutations(searchspace.values)
+    it = Combinatorics.permutations(searchspace.values, searchspace.dim)
     Sampler(Grid(npartitions, (it, nothing)), searchspace)
 end
 

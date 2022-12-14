@@ -3,6 +3,8 @@ using SearchSpaces
 
 const AVAILABLE_SPACES = [
                   Permutations(11),
+                  Permutations([:red, :green, :blue]),
+                  Permutations([:red, :green, :blue, :alpha], 3),
                   BitArrays(7),
                   Bounds(lb = 1.1, ub = 4.1),
                   Bounds(lb = zeros(5), ub = ones(5)),
@@ -31,6 +33,11 @@ const AVAILABLE_SPACES = [
         @test cardinality(perms)  == prod(2:5)
         @test ispermutation(1:perms.dim, perms)
         @test !ispermutation(ones(Int, 5), perms)
+
+        perms  = Permutations([:red, :green, :blue, :alpha, :pink], 3)
+        @test ispermutation([:alpha, :green, :pink], perms)
+        @test !ispermutation([:alpha , :pink], perms)
+        @test !ispermutation([:green, :green, :red], perms)
     end
 
     @testset "BitArrays" begin
