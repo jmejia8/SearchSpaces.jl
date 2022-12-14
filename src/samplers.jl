@@ -63,3 +63,28 @@ Base.length(sampler::Sampler{S, B}) where {S<:Grid,B} = sampler.len
 Base.size(sampler::Sampler{S, B}) where {S<:Grid,B} = (sampler.len,)
 Base.IsInfinite(sampler::Sampler{S, B}) where {S<:AtRandom,B} = true
 
+
+Base.rand(se::AbstractSearchSpace) = value(AtRandom(se))
+Base.rand(rng::Random.AbstractRNG, se::AbstractSearchSpace) = value(AtRandom(se;rng=rng))
+Base.rand(rng::Random.AbstractRNG, se::AbstractSearchSpace, d::Integer) = [v for (v, _) in zip(AtRandom(se;rng), 1:d)]
+function Base.rand(se::AbstractSearchSpace, d::Integer)
+    s = AtRandom(se)
+    [value(s) for _ in 1:d]
+end
+
+
+
+#=
+"""1
+    describe(searchspace)
+
+Returns a dictionary summarizing the information about the search space:
+"""
+function describe(se::AbstractSearchSpace)
+    Dict(
+         :cardinality => cardinality(se),
+         :
+        )
+end
+=#
+

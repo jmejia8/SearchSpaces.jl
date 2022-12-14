@@ -54,7 +54,7 @@ function Grid(searchspace::MixedSpace; npartitions = 3)
     ks = keys(searchspace.domain)
     it = Iterators.product((Grid(searchspace.domain[k];npartitions) for k in ks)...)
 
-    Sampler(Grid(npartitions, (it, nothing)), searchspace, cardinality(searchspace))
+    Sampler(Grid(npartitions, (it, nothing)), searchspace, length(it))
 end
 
 function Sampler(sampler, searchspace::MixedSpace)

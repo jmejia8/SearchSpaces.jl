@@ -75,7 +75,7 @@ function Grid(bnds::Bounds{T}; npartitions = 3) where T <: Integer
                            (a:b for (a, b) in zip(bnds.lb, bnds.ub))...
                           )
 
-    Sampler(Grid(npartitions, (it, nothing)), bnds, BigInt(npartitions)^d)
+    Sampler(Grid(npartitions, (it, nothing)), bnds, length(it))
 end
 
 function Grid(bnds::Bounds; npartitions = 3)
@@ -88,6 +88,6 @@ function Grid(bnds::Bounds; npartitions = 3)
                            )...
                           )
 
-    Sampler(Grid(npartitions, (it, nothing)), bnds, BigInt(npartitions)^d)
+    Sampler(Grid(npartitions, (it, nothing)), bnds, length(it))
 end
 

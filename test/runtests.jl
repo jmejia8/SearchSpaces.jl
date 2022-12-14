@@ -1,20 +1,25 @@
 using Test
 using SearchSpaces
 
+# put here example of search spaces
 const AVAILABLE_SPACES = [
-                  Permutations(11),
-                  Permutations([:red, :green, :blue]),
-                  Permutations([:red, :green, :blue, :alpha], 3),
-                  BitArrays(7),
-                  Bounds(lb = 1.1, ub = 4.1),
-                  Bounds(lb = zeros(5), ub = ones(5)),
-                  Bounds(lb = fill(-10, 9), ub = fill(10, 9)),
-                  Bounds(lb = zeros(5), ub = ones(5), rigid=false),
-                  MixedSpace(:X => Permutations(3),
-                             :Y => BitArrays(3),
-                             :Z => Bounds(lb = zeros(2), ub = ones(2)),
-                            ) 
-                 ]
+                          # variants for defining permutations
+                          Permutations(5),
+                          Permutations([:red, :green, :blue]),
+                          Permutations([:red, :green, :blue, :alpha], 2),
+                          # variants for defining bit arrays
+                          BitArrays(4),
+                          # defining different type of bounds
+                          Bounds(lb = 1.1, ub = 4.1),
+                          Bounds(lb = zeros(5), ub = ones(5)),
+                          Bounds(lb = fill(-10, 3), ub = fill(10, 3)),
+                          Bounds(lb = zeros(2), ub = ones(2), rigid=false),
+                          # mixed search space
+                          MixedSpace(:X => Permutations(3),
+                                     :Y => BitArrays(3),
+                                     :Z => Bounds(lb = zeros(2), ub = ones(2)),
+                                    ) 
+                         ]
 
 @testset "API" begin
 
@@ -72,7 +77,6 @@ const AVAILABLE_SPACES = [
     end
 
     @testset "Samplers" begin
-        @test length(collect(Grid(BitArrays(3)))) == length(Grid(BitArrays(3)))
         @test length(collect(Grid(Permutations(3)))) == length(Grid(Permutations(3)))
         @test length(collect(Grid(Bounds(lb=[-1.0, -1],ub=[1.0, 3])))) == length(Grid(Bounds(lb=[-1.0, -1],ub=[1, 3.0])))
         for sampler in [Grid, AtRandom]
@@ -83,6 +87,12 @@ const AVAILABLE_SPACES = [
                 end
             end
         end
+    end
+
+    # check length of the grid
+    for searchspace in AVAILABLE_SPACES
+        sampler = Grid(searchspace)
+        @test length(collect(sampler)) == length(sampler)
     end
 
 end

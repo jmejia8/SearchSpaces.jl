@@ -33,12 +33,18 @@ function value(sampler::Sampler{R, P}) where {R<:AtRandom, P<:Permutations}
         return Random.shuffle(parameters.rng, searchspace.values)
     end
 
+    if searchspace.dim == 1
+        return rand(parameters.rng, searchspace.values)
+    end
+
     # TODO improve this
     Random.shuffle(parameters.rng, searchspace.values)[1:getdim(searchspace)]
 end
 
 function cardinality(searchspace::Permutations)
-    prod(1:BigInt(searchspace.dim))
+    n = length(searchspace.values)
+    r = searchspace.dim
+    prod((n-r+1):BigInt(n))
 end
 
 function ispermutation(x::AbstractVector{<:Integer}, searchspace::Permutations)

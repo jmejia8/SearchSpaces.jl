@@ -36,5 +36,9 @@ end
 isinspace(x, searchspace::BitArrays) = isbitarray(x, searchspace)
 
 function value(sampler::Sampler{R, P}) where {R<:AtRandom, P<:BitArrays}
+    if getdim(sampler.searchspace) == 1
+        return rand(sampler.method.rng, Bool)
+    end
+    
     rand(sampler.method.rng, Bool, getdim(sampler.searchspace))
 end
