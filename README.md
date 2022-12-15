@@ -1,6 +1,10 @@
 # SearchSpaces.jl
 
+
+[![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
+
 Just a simple Julia package to define search spaces for, perhaps, optimization.
+
 
 ## Search Spaces
 

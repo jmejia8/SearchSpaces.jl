@@ -15,7 +15,7 @@ include("categorical.jl")
 include("mixedspace.jl")
 include("variable.jl")
 
-export BitArrays, Bounds, Permutations, MixedSpace, Grid, cardinality, RandomInDomain
+export BitArrays, Bounds, Permutations, MixedSpace, Grid, cardinality
 export  isinbounds, ispermutation, Variable, @var, AtRandom, isinspace, Categorical
 
 end

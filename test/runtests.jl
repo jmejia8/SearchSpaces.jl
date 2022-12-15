@@ -2,6 +2,10 @@ using Test
 using SearchSpaces
 import Random
 
+# Aqua: Auto QUality Assurance for Julia packages
+using Aqua
+Aqua.test_all(SearchSpaces)
+
 # put here example of search spaces
 const AVAILABLE_SPACES = [
                           # variants for defining permutations
@@ -121,3 +125,4 @@ const AVAILABLE_SAMPLERS = [Grid, AtRandom]
         @test ismissing(missing in searchspace)
     end
 end
+
