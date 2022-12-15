@@ -26,7 +26,7 @@ function Permutations(values::AbstractVector, perm_size = length(values))
     Permutations(collect(1:perm_size), values, perm_size)
 end
 
-function value(sampler::Sampler{R, P}) where {R<:AtRandom, P<:Permutations}
+function value(sampler::Sampler{R, P}) where {R<:AbstractRNGSampler, P<:Permutations}
     parameters = sampler.method
     searchspace = sampler.searchspace
     if searchspace.dim == length(searchspace.values)

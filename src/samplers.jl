@@ -1,4 +1,5 @@
 abstract type AbstractSampler end
+abstract type AbstractRNGSampler end
 
 struct Sampler{M, S} <: AbstractSampler
     method::M
@@ -19,7 +20,7 @@ function Base.iterate(S::Sampler, state=1)
     val, state + 1
 end
 
-struct AtRandom{R} <: AbstractSampler
+struct AtRandom{R} <: AbstractRNGSampler
     rng::R
 end
 
@@ -61,30 +62,14 @@ end
 
 Base.length(sampler::Sampler{S, B}) where {S<:Grid,B} = sampler.len
 Base.size(sampler::Sampler{S, B}) where {S<:Grid,B} = (sampler.len,)
-Base.IsInfinite(sampler::Sampler{S, B}) where {S<:AtRandom,B} = true
+Base.IsInfinite(sampler::Sampler{S, B}) where {S<:AbstractRNGSampler,B} = true
 
-
-Base.rand(se::AbstractSearchSpace) = value(AtRandom(se))
 Base.rand(rng::Random.AbstractRNG, se::AbstractSearchSpace) = value(AtRandom(se;rng=rng))
-Base.rand(rng::Random.AbstractRNG, se::AbstractSearchSpace, d::Integer) = [v for (v, _) in zip(AtRandom(se;rng), 1:d)]
-function Base.rand(se::AbstractSearchSpace, d::Integer)
-    s = AtRandom(se)
+Base.rand(se::AbstractSearchSpace) = rand(Random.default_rng(), se)
+function Base.rand(rng::Random.AbstractRNG, se::AbstractSearchSpace, d::Integer)
+    s = AtRandom(se;rng=rng)
     [value(s) for _ in 1:d]
 end
 
-
-
-#=
-"""1
-    describe(searchspace)
-
-Returns a dictionary summarizing the information about the search space:
-"""
-function describe(se::AbstractSearchSpace)
-    Dict(
-         :cardinality => cardinality(se),
-         :
-        )
-end
-=#
+Base.rand(se::AbstractSearchSpace, d::Integer) = rand(Random.default_rng(), se, d)
 

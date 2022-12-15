@@ -1,5 +1,6 @@
 using Test
 using SearchSpaces
+import Random
 
 # put here example of search spaces
 const AVAILABLE_SPACES = [
@@ -20,6 +21,8 @@ const AVAILABLE_SPACES = [
                                      :Z => Bounds(lb = zeros(2), ub = ones(2)),
                                     ) 
                          ]
+
+const AVAILABLE_SAMPLERS = [Grid, AtRandom]
 
 @testset "API" begin
 
@@ -77,9 +80,8 @@ const AVAILABLE_SPACES = [
     end
 
     @testset "Samplers" begin
-        @test length(collect(Grid(Permutations(3)))) == length(Grid(Permutations(3)))
-        @test length(collect(Grid(Bounds(lb=[-1.0, -1],ub=[1.0, 3])))) == length(Grid(Bounds(lb=[-1.0, -1],ub=[1, 3.0])))
-        for sampler in [Grid, AtRandom]
+        # check samplers
+        for sampler in AVAILABLE_SAMPLERS
             for searchspace in AVAILABLE_SPACES
                 # sample at most 3 elements
                 for (x, _) in zip(sampler(searchspace), 1:3)
@@ -92,7 +94,15 @@ const AVAILABLE_SPACES = [
     # check length of the grid
     for searchspace in AVAILABLE_SPACES
         sampler = Grid(searchspace)
+        # check length in Grid
         @test length(collect(sampler)) == length(sampler)
+        # check random generators
+        @test isinspace(rand(searchspace), searchspace)
+        for x in rand(searchspace, 3)
+            @test isinspace(x, searchspace)
+        end
     end
+
+
 
 end

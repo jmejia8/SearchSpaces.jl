@@ -63,7 +63,7 @@ function _get_random(bounds::Bounds, rng)
     bounds.lb + bounds.Δ .* rand(rng, getdim(bounds))
 end
 
-function value(sampler::Sampler{S, B}) where {S<:AtRandom,B<:Bounds}
+function value(sampler::Sampler{S, B}) where {S<:AbstractRNGSampler,B<:Bounds}
     parameters = sampler.method
     searchspace = sampler.searchspace
     _get_random(searchspace, parameters.rng)
