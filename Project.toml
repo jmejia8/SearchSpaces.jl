@@ -1,7 +1,7 @@
 name = "SearchSpaces"
 uuid = "eb7571c6-2196-4f03-99b8-52a5a35b3163"
 authors = ["Jesus Mejia <jesusmejded@gmail.com>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
@@ -9,6 +9,7 @@ Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
 Combinatorics = "1"
+julia = "^1.7"
 
 [extras]
 Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
