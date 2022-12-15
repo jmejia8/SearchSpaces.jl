@@ -42,6 +42,11 @@ function cardinality(searchspace::Bounds)
     Inf
 end
 
+"""
+    isinbounds(item, searchspace) --> Bool
+
+Determine whether an item is in the given searchspace.
+"""
 isinbounds(x, searchspace::Bounds) = false
 
 function isinbounds(x::AbstractVector{T}, searchspace::Bounds{T}) where T <: Real

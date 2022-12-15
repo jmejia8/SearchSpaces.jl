@@ -80,7 +80,21 @@ function ispermutation(x::AbstractVector, searchspace::Permutations)
 end
 
 
+
+"""
+    ispermutation(item, searchspace) --> Bool
+
+Determine whether an item is in the given searchspace.
+"""
 ispermutation(x, searchspace::Permutations) = x in searchspace.values
+
+"""
+    isinspace(item, searchspace) --> Bool
+
+Determine whether an item is in the given searchspace.
+
+See also [`in`](@ref).
+"""
 isinspace(x, searchspace::Permutations) = ispermutation(x, searchspace)
 
 function Grid(searchspace::Permutations; npartitions = 0)
