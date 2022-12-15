@@ -13,12 +13,33 @@ BitArrays(;dim = 0) = BitArrays(dim)
 """
     cardinality(searchspace)
 
-Cardinality of the search space
+Cardinality of the search space.
+
+# Example
+
+```julia
+julia> cardinality(Permutations(5))
+120
+
+julia> cardinality(Bounds(lb = zeros(2), ub = ones(2)))
+Inf
+
+julia> cardinality(Bounds(lb = zeros(Int, 2), ub = ones(Int,2)))
+4
+
+julia> mixed = MixedSpace(
+                          :W => Categorical([:red, :green, :blue]),
+                          :X => Permutations(3),
+                          :Y => BitArrays(3),
+                         );
+
+julia> cardinality(mixed)
+Inf
+```
 """
 function cardinality(searchspace::BitArrays)
     BigInt(2)^searchspace.dim
 end
-
 
 function Grid(searchspace::BitArrays; npartitions = 3)
     d = getdim(searchspace)
