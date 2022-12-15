@@ -1,5 +1,27 @@
 # Examples
 
+# Finding Elements
+
+A search space is only a place where certain items are. However, those elements appear
+under the presence of a sampler. Let's find the argument that minimizes function.
+
+Finding the argument that minimizes a given function.
+
+```julia-repl
+julia> searchspace = MixedSpace(:N=>1:50, :flag => [true, false], :p =>Bounds(0.0, 1));
+
+julia> f(x) = x[:flag] ? sum(1:x[:N])-x[:p] : x[:p] + sum(1:x[:N])
+f (generic function with 3 methods)
+
+julia> argmin(f, Grid(searchspace))
+Dict{Symbol, Real} with 3 entries:
+  :N    => 1
+  :p    => 1.0
+  :flag => true
+```
+
+## Defining Search Spaces
+
 ```julia-repl
 Permutations(5)
 Permutations([:red, :green, :blue])

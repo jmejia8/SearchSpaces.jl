@@ -11,9 +11,9 @@ struct Variable{N, S <: AbstractSearchSpace} <: AbstractVariable
 end
 
 """
-    @var
+    @var x in searchspace
 
-A macro to define a [`Variable`](@ref).
+A macro to define a [`Variable`](@ref) for in the given search space.
 """
 macro var(ex)
     if length(ex.args) != 3 || ex.args[1] ∉ [:in, :∈]
