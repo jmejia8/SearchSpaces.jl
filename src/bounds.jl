@@ -42,9 +42,18 @@ function cardinality(searchspace::Bounds)
     Inf
 end
 
-function isinbounds(x, searchspace::Bounds)
+isinbounds(x, searchspace::Bounds) = false
+
+function isinbounds(x::AbstractVector{T}, searchspace::Bounds{T}) where T <: Real
+    if length(x) != getdim(searchspace)
+        return false
+    end
+    
     all(searchspace.lb .<= x .<= searchspace.ub)
 end
+
+isinbounds(x::T, searchspace::Bounds{T}) where T <: Real = first(searchspace.lb) <= x <= last(searchspace.ub)
+
 
 isinspace(x, searchspace::Bounds) = isinbounds(x, searchspace)
 

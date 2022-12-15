@@ -49,6 +49,7 @@ function isinspace(x::Dict, searchspace::MixedSpace)
     all(isinspace(x[k], searchspace.domain[k]) for k in ks)
 end
 
+isinspace(x, searchspace::MixedSpace) = false
 
 function Grid(searchspace::MixedSpace; npartitions = 3)
     ks = keys(searchspace.domain)

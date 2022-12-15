@@ -1,29 +1,28 @@
-struct Permutations{I, V} <: AtomicSearchSpace
-    indices::I
+struct Permutations{V} <: AtomicSearchSpace
     values::V
     dim::Int
 end
 
 
-"""
-    Permutations(perm_size; values=1:perm_size)
-
-Define a search space defined by permuting the values of size perm_size.
-"""
 function Permutations(perm_size::Integer = 0; values = collect(1:perm_size))
     if perm_size == 0
         perm_size = length(values)
     end
     
     @assert perm_size > 0 "Empty permutation is not allowed"
-    @assert perm_size == length(values) "Permutations size and values array must be the same."
 
-    Permutations(collect(1:perm_size), values, perm_size)
+    Permutations(values, perm_size)
 end
 
-function Permutations(values::AbstractVector, perm_size = length(values))
-    @assert perm_size > 0 "Empty permutation is not allowed"
-    Permutations(collect(1:perm_size), values, perm_size)
+"""
+    Permutations(values; k)
+    Permutations(k)
+
+Define a search space defined by permuting the values of size k (k-permutations).
+"""
+function Permutations(values::AbstractVector; k = length(values))
+    @assert k > 0 "Empty permutation is not allowed"
+    Permutations(values, k)
 end
 
 function value(sampler::Sampler{R, P}) where {R<:AbstractRNGSampler, P<:Permutations}
@@ -59,6 +58,7 @@ function ispermutation(x::AbstractVector{<:Integer}, searchspace::Permutations)
     all(mask)
 end
 
+
 function ispermutation(x::AbstractVector, searchspace::Permutations)
     if length(x) != searchspace.dim
         return false
@@ -80,9 +80,11 @@ function ispermutation(x::AbstractVector, searchspace::Permutations)
 end
 
 
+ispermutation(x, searchspace::Permutations) = x in searchspace.values
+isinspace(x, searchspace::Permutations) = ispermutation(x, searchspace)
+
 function Grid(searchspace::Permutations; npartitions = 0)
     it = Combinatorics.permutations(searchspace.values, searchspace.dim)
     Sampler(Grid(npartitions, (it, nothing)), searchspace)
 end
 
-isinspace(x, searchspace::Permutations) = ispermutation(x, searchspace)

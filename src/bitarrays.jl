@@ -50,10 +50,11 @@ function Grid(searchspace::BitArrays; npartitions = 3)
     Sampler(Grid(npartitions, (it, nothing)), searchspace)
 end
 
-function isbitarray(x::AbstractVector, searchspace::BitArrays)
-    eltype(x) <: Bool && length(x) == getdim(searchspace)
+function isbitarray(x::AbstractVector{T}, searchspace::BitArrays) where T<:Bool
+    length(x) == getdim(searchspace)
 end
 
+isbitarray(x, searchspace::BitArrays) = false
 isinspace(x, searchspace::BitArrays) = isbitarray(x, searchspace)
 
 function value(sampler::Sampler{R, P}) where {R<:AbstractRNGSampler, P<:BitArrays}
