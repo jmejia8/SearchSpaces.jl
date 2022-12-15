@@ -19,7 +19,9 @@ const AVAILABLE_SPACES = [
                           MixedSpace(:X => Permutations(3),
                                      :Y => BitArrays(3),
                                      :Z => Bounds(lb = zeros(2), ub = ones(2)),
-                                    ) 
+                                    ) ,
+                          # mixed with native iterators
+                          MixedSpace(:x => 1:10, :y => [:red, :green], :z => Permutations(1:3))
                          ]
 
 const AVAILABLE_SAMPLERS = [Grid, AtRandom]
@@ -118,7 +120,4 @@ const AVAILABLE_SAMPLERS = [Grid, AtRandom]
         end
         @test ismissing(missing in searchspace)
     end
-
-
-
 end

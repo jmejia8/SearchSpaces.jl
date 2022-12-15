@@ -34,7 +34,7 @@ julia> mixed = MixedSpace(
                          );
 
 julia> cardinality(mixed)
-Inf
+144
 ```
 """
 function cardinality(searchspace::BitArrays)

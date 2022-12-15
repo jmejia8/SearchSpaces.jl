@@ -18,8 +18,15 @@ julia> MixedSpace( :X => Bounds(lb = [-1.0, -3.0], ub = [10.0, 10.0]),
 ```
 """
 function MixedSpace(ps::Pair...)
-    MixedSpace(Dict(ps), nothing)
+    MixedSpace(_get_domain_mixedspace(ps...), nothing)
 end
+
+_get_domain_mixedspace(ps::Pair...) = Dict(first(v) => _pre_proces_space(last(v)) for v in ps)
+
+# add here how to build mixed spaces
+_pre_proces_space(v::V) where  V<:AbstractSearchSpace = v
+_pre_proces_space(v::V) where  V<:AbstractVector = Categorical(v)
+
 
 function Base.show(io::IO, searchspace::MixedSpace)
     ks = keys(searchspace.domain)
