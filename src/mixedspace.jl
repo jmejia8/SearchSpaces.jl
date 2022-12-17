@@ -1,7 +1,6 @@
-
 struct MixedSpace{D, M} <: AbstractSearchSpace
     domain::D
-    meta::M
+    key_order::M
 end
 
 """
@@ -18,8 +17,26 @@ julia> MixedSpace( :X => Bounds(lb = [-1.0, -3.0], ub = [10.0, 10.0]),
 ```
 """
 function MixedSpace(ps::Pair...)
-    MixedSpace(_get_domain_mixedspace(ps...), nothing)
+    MixedSpace(_get_domain_mixedspace(ps...), first.(ps))
 end
+
+"""
+    A × B
+
+Return the mixed space using Cartesian product.
+"""
+function (×)(S::T, S2::T2) where {T<:AtomicSearchSpace,T2<:AtomicSearchSpace}
+    MixedSpace(:S1 => S, :S2 => S2)
+end
+
+function _prod_spaces(_D::T, S2::T2) where {T<:MixedSpace,T2<:AtomicSearchSpace}
+    D = _D.domain
+    k = Symbol("S" * string(length(D) + 1))
+    MixedSpace(k => S2, D...)
+end
+
+(×)(_D::T, S2::T2) where {T<:MixedSpace,T2<:AtomicSearchSpace} = _prod_spaces(_D, S2)
+(×)(_D::T, S2::T2) where {T<:AtomicSearchSpace,T2<:MixedSpace} = _prod_spaces(S2, _D)
 
 _get_domain_mixedspace(ps::Pair...) = Dict(first(v) => _pre_proces_space(last(v)) for v in ps)
 
@@ -32,7 +49,7 @@ function Base.show(io::IO, searchspace::MixedSpace)
     ks = keys(searchspace.domain)
     print(io, "MixedSpace defined by ", length(ks), " ")
     length(ks) != 1 ? println(io, "subspaces:") : println(io, "subspace:")
-    for k in ks
+    for k in searchspace.key_order
         println(io, k, " => ", searchspace.domain[k])
     end
 end

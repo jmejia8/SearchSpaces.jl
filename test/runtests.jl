@@ -71,7 +71,7 @@ const AVAILABLE_SAMPLERS = [Grid, AtRandom]
         @test !([1,2,3] in bits)
     end
 
-    @testset "SearchSpace" begin
+    @testset "MixedSpace" begin
         bounds = Bounds(lb = [0, -5], ub = [10, 5])
         perms  = Permutations(5)
         bits   = BitArrays(dim = 3)
@@ -84,10 +84,14 @@ const AVAILABLE_SAMPLERS = [Grid, AtRandom]
         @test rand(ss) in ss
         @test Dict(:X => 1, :Y => 2, :Z => 3) ∉ ss
         @test Dict(:X => [0,0], :Y => collect(1:5), :Z => zeros(Bool,3), :W => 1) ∉ ss
+
+        @test bounds × ss isa MixedSpace
+        @test ss × bounds isa MixedSpace
+        @test bounds × perms  × bits × perms isa MixedSpace
+        
     end
 
     @testset "Variables" begin
-
         for searchspace in AVAILABLE_SPACES
             x = Variable(:x, searchspace)
             @test x isa Variable
