@@ -12,11 +12,13 @@ include("bitarrays.jl")
 include("bounds.jl")
 include("permutations.jl")
 include("categorical.jl")
+include("combinations.jl")
 include("mixedspace.jl")
 include("variable.jl")
 
 export BitArrays, Bounds, Permutations, MixedSpace, Grid, cardinality
 export  isinbounds, ispermutation, Variable, @var, AtRandom, isinspace, Categorical
 export ×
+export Combinations, iscombination
 
 end

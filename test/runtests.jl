@@ -12,6 +12,8 @@ const AVAILABLE_SPACES = [
                           Permutations(5),
                           Permutations([:red, :green, :blue]),
                           Permutations([:red, :green, :blue, :alpha], 2),
+                          Combinations([:red, :green, :blue, :alpha], 2),
+                          Combinations([:red, :green, :blue]),
                           # variants for defining bit arrays
                           BitArrays(4),
                           # defining different type of bounds
@@ -61,6 +63,20 @@ const AVAILABLE_SAMPLERS = [Grid, AtRandom]
         @test ispermutation([:alpha, :green, :pink], perms)
         @test !ispermutation([:alpha , :pink], perms)
         @test !ispermutation([:green, :green, :red], perms)
+    end
+
+    @testset "Combinations" begin
+        comb  = Combinations(1:10, 3)
+        @test cardinality(comb)  == 220
+        @test iscombination(ones(Int, 3), comb)
+        @test !(collect(1:5) in comb)
+        @test collect(1:3) in comb
+        @test !([1,2,2,2,5] in comb)
+
+        comb  = Combinations([:red, :green, :blue], 6)
+        @test iscombination(fill(:green, 6), comb)
+        @test !iscombination([:alpha , :pink], comb)
+        @test !iscombination([:green, :green, :red], comb)
     end
 
     @testset "BitArrays" begin
