@@ -50,3 +50,7 @@ isinspace
 Variable
 @var
 ```
+
+```@autodocs
+Modules = [SearchSpaces]
+```
