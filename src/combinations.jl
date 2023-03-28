@@ -1,32 +1,32 @@
-struct Combinations{V} <: AtomicSearchSpace
+struct CombinationSpace{V} <: AtomicSearchSpace
     values::V
     dim::Int
 end
 
 """
-    Combinations(values; k)
-    Combinations(k)
+    CombinationSpace(values; k)
+    CombinationSpace(k)
 
 Define a search space defined by the combinations (with replacement) of size k.
 """
-function Combinations(values::AbstractVector; k = length(values))
+function CombinationSpace(values::AbstractVector; k = length(values))
     if length(values) > 0 && k > 0 
-        return Combinations(values, k)
+        return CombinationSpace(values, k)
     end
     error("Empty combinations are not allowed")
 end
 
-Combinations(k::Int) = Combinations(1:k, k)
+CombinationSpace(k::Int) = CombinationSpace(1:k, k)
 
 
-function cardinality(searchspace::Combinations)
+function cardinality(searchspace::CombinationSpace)
     n = length(searchspace.values)
     r = searchspace.dim
     prod(n:BigInt(n + r - 1)) ÷ prod(2:BigInt(r))
 end
 
 
-function iscombination(x::AbstractVector, searchspace::Combinations)
+function iscombination(x::AbstractVector, searchspace::CombinationSpace)
     if length(x) != searchspace.dim
         return false
     end 
@@ -42,12 +42,12 @@ function iscombination(x::AbstractVector, searchspace::Combinations)
 end
 
 
-isinspace(x, searchspace::Combinations) = iscombination(x, searchspace)
+isinspace(x, searchspace::CombinationSpace) = iscombination(x, searchspace)
 
 #####################
 # Related to SAMPLER
 #####################
-function value(sampler::Sampler{R, P}) where {R<:AbstractRNGSampler, P<:Combinations}
+function value(sampler::Sampler{R, P}) where {R<:AbstractRNGSampler, P<:CombinationSpace}
     parameters = sampler.method
     searchspace = sampler.searchspace
 
@@ -58,7 +58,8 @@ function value(sampler::Sampler{R, P}) where {R<:AbstractRNGSampler, P<:Combinat
     rand(parameters.rng, searchspace.values, getdim(searchspace))
 end
 
-function Grid(searchspace::Combinations; npartitions = 0)
+function Grid(searchspace::CombinationSpace; npartitions = 0)
     it = Combinatorics.with_replacement_combinations(searchspace.values, searchspace.dim)
     Sampler(Grid(npartitions, (it, nothing)), searchspace)
 end
+

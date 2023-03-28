@@ -10,9 +10,9 @@ Construct a search space.
 
 ### Examples
 ```julia-repl
-julia> MixedSpace( :X => Bounds(lb = [-1.0, -3.0], ub = [10.0, 10.0]),
-                   :Y => Permutations(10),
-                   :Z => BitArrays(dim = 10)
+julia> MixedSpace( :X => Hyperrectangle(lb = [-1.0, -3.0], ub = [10.0, 10.0]),
+                   :Y => PermutationSpace(10),
+                   :Z => BitArraySpace(dim = 10)
                    ) 
 ```
 """
@@ -42,7 +42,7 @@ _get_domain_mixedspace(ps::Pair...) = Dict(first(v) => _pre_proces_space(last(v)
 
 # add here how to build mixed spaces
 _pre_proces_space(v::V) where  V<:AbstractSearchSpace = v
-_pre_proces_space(v::V) where  V<:AbstractVector = Categorical(v)
+_pre_proces_space(v::V) where  V<:AbstractVector = CategorySpace(v)
 
 
 function Base.show(io::IO, searchspace::MixedSpace)

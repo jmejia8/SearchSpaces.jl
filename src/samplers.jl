@@ -44,12 +44,12 @@ end
 
 Return an iterator over the given searchspace.
 
-The `npartitions` controls the number of partitions for each axis when `searchspace isa Bounds` (3 by default).
+The `npartitions` controls the number of partitions for each axis when `searchspace isa Hyperrectangle` (3 by default).
 
 # Examples
 
 ```julia-repl
-julia> for x in Grid(Permutations([:red, :green, :blue]))
+julia> for x in Grid(PermutationSpace([:red, :green, :blue]))
            @show x
        end
 x = [:red, :green, :blue]
@@ -59,7 +59,7 @@ x = [:green, :blue, :red]
 x = [:blue, :red, :green]
 x = [:blue, :green, :red]
 
-julia> for x in Grid(Bounds(lb=[-1.0, -1], ub=[1, 0.0]), npartitions=3)
+julia> for x in Grid(Hyperrectangle(lb=[-1.0, -1], ub=[1, 0.0]), npartitions=3)
            @show x
        end
 x = [-1.0, -1.0]
@@ -73,8 +73,8 @@ x = [0.0, 0.0]
 x = [1.0, 0.0]
 
 julia> mixed = MixedSpace(
-                                 :W => Categorical([:red, :green, :blue]),
-                                 :X => Permutations(2),
+                                 :W => CategorySpace([:red, :green, :blue]),
+                                 :X => PermutationSpace(2),
                                  :Y => BitArrays(2),
                                 );
 
@@ -140,7 +140,7 @@ Pick a random element or array of random elements from the search space specifie
 ### Examples
 
 ```julia-repl
-julia> searchspace = Bounds(lb=[-10, 1, 100], ub = [10, 2, 1000]);
+julia> searchspace = Hyperrectangle(lb=[-10, 1, 100], ub = [10, 2, 1000]);
 
 julia> rand(searchspace)
 3-element Vector{Int64}:
@@ -159,10 +159,10 @@ Another example using `MixedSpace`:
 
 ```julia-repl
 julia> mixed = MixedSpace(
-                          :W => Categorical([:red, :green, :blue]),
-                          :X => Permutations(3),
+                          :W => CategorySpace([:red, :green, :blue]),
+                          :X => PermutationSpace(3),
                           :Y => BitArrays(3),
-                          :Z => Bounds(lb = zeros(2), ub = ones(2))
+                          :Z => Hyperrectangle(lb = zeros(2), ub = ones(2))
                          );
 
 julia> rand(mixed)
