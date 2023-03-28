@@ -1,0 +1,21 @@
+pre {
+    border-radius: 7px;
+}
+
+code.nohighlight.ansi {
+    transition: opacity .5s ease-out;
+    opacity: 0.5;
+}
+
+.documenter-example-output code.nohighlight.ansi{
+    opacity: 0.8;
+}
+
+
+pre:hover > code.nohighlight.ansi {
+    opacity: 9;
+}
+
+.content pre {
+  border: 1px solid #e6e6e6;
+}
