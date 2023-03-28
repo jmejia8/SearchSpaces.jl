@@ -16,6 +16,8 @@ function Combinations(values::AbstractVector; k = length(values))
     error("Empty combinations are not allowed")
 end
 
+Combinations(k::Int) = Combinations(1:k, k)
+
 
 function cardinality(searchspace::Combinations)
     n = length(searchspace.values)

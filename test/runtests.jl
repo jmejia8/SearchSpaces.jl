@@ -14,6 +14,7 @@ const AVAILABLE_SPACES = [
                           Permutations([:red, :green, :blue, :alpha], 2),
                           Combinations([:red, :green, :blue, :alpha], 2),
                           Combinations([:red, :green, :blue]),
+                          Combinations(5),
                           # variants for defining bit arrays
                           BitArrays(4),
                           # defining different type of bounds
