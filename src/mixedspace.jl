@@ -10,7 +10,7 @@ Construct a search space.
 
 ### Examples
 ```julia-repl
-julia> MixedSpace( :X => Hyperrectangle(lb = [-1.0, -3.0], ub = [10.0, 10.0]),
+julia> MixedSpace( :X => BoxConstrainedSpace(lb = [-1.0, -3.0], ub = [10.0, 10.0]),
                    :Y => PermutationSpace(10),
                    :Z => BitArraySpace(dim = 10)
                    ) 

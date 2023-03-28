@@ -7,7 +7,7 @@ end
 
 Define a search space delimited by bit arrays.
 """
-BitArraySpace(;dim = 0) = BitArrays(dim)
+BitArraySpace(;dim = 0) = BitArraySpace(dim)
 
 
 """
@@ -21,10 +21,10 @@ Cardinality of the search space.
 julia> cardinality(PermutationSpace(5))
 120
 
-julia> cardinality(Hyperrectangle(lb = zeros(2), ub = ones(2)))
+julia> cardinality(BoxConstrainedSpace(lb = zeros(2), ub = ones(2)))
 Inf
 
-julia> cardinality(Hyperrectangle(lb = zeros(Int, 2), ub = ones(Int,2)))
+julia> cardinality(BoxConstrainedSpace(lb = zeros(Int, 2), ub = ones(Int,2)))
 4
 
 julia> mixed = MixedSpace(

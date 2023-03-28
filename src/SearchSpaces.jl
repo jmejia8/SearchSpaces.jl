@@ -17,9 +17,10 @@ include("mixedspace.jl")
 include("variable.jl")
 include("aliases.jl")
 
-export BitArrays, Bounds, Permutations, MixedSpace, Grid, cardinality
-export  isinbounds, ispermutation, Variable, @var, AtRandom, isinspace, Categorical
+export MixedSpace, Grid, cardinality
+export  isinbounds, ispermutation, Variable, @var, AtRandom, isinspace, CategorySpace
 export ×
-export Combinations, iscombination
+export iscombination
+export BoxConstrainedSpace,PermutationSpace,BitArraySpace,CategorySpace, CombinationSpace
 
 end

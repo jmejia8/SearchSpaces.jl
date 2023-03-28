@@ -7,27 +7,27 @@ The search spaces can be defined as follows.
 ### $k$-Permutation Space
 
 ```@docs
-Permutations
+PermutationSpace
 ```
 
-### Categorical
+### CategoricalSpace
 
 ```@docs
-Categorical
+CategoricalSpace
 ```
 
 ### Bit Arrays
 
 
 ```@docs
-BitArrays
+BitArraySpace
 ```
 
-### Bounds (Box-space)
+### BoxConstrainedSpace (Box-space)
 
 
 ```julia-repl
-Bounds
+BoxConstrainedSpace
 ```
 
 ## Built-in Samplers

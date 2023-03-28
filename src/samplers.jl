@@ -44,7 +44,7 @@ end
 
 Return an iterator over the given searchspace.
 
-The `npartitions` controls the number of partitions for each axis when `searchspace isa Hyperrectangle` (3 by default).
+The `npartitions` controls the number of partitions for each axis when `searchspace isa BoxConstrainedSpace` (3 by default).
 
 # Examples
 
@@ -59,7 +59,7 @@ x = [:green, :blue, :red]
 x = [:blue, :red, :green]
 x = [:blue, :green, :red]
 
-julia> for x in Grid(Hyperrectangle(lb=[-1.0, -1], ub=[1, 0.0]), npartitions=3)
+julia> for x in Grid(BoxConstrainedSpace(lb=[-1.0, -1], ub=[1, 0.0]), npartitions=3)
            @show x
        end
 x = [-1.0, -1.0]
@@ -140,7 +140,7 @@ Pick a random element or array of random elements from the search space specifie
 ### Examples
 
 ```julia-repl
-julia> searchspace = Hyperrectangle(lb=[-10, 1, 100], ub = [10, 2, 1000]);
+julia> searchspace = BoxConstrainedSpace(lb=[-10, 1, 100], ub = [10, 2, 1000]);
 
 julia> rand(searchspace)
 3-element Vector{Int64}:
@@ -162,7 +162,7 @@ julia> mixed = MixedSpace(
                           :W => CategorySpace([:red, :green, :blue]),
                           :X => PermutationSpace(3),
                           :Y => BitArrays(3),
-                          :Z => Hyperrectangle(lb = zeros(2), ub = ones(2))
+                          :Z => BoxConstrainedSpace(lb = zeros(2), ub = ones(2))
                          );
 
 julia> rand(mixed)
