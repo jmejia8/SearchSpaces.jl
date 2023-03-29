@@ -10,10 +10,10 @@ The search spaces can be defined as follows.
 PermutationSpace
 ```
 
-### CategoricalSpace
+### Category Space
 
 ```@docs
-CategoricalSpace
+CategorySpace
 ```
 
 ### Bit Arrays
@@ -23,7 +23,7 @@ CategoricalSpace
 BitArraySpace
 ```
 
-### BoxConstrainedSpace (Box-space)
+### Box-Constrained Space (Box-space)
 
 
 ```julia-repl

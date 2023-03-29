@@ -1,24 +1,12 @@
 # Examples
 
-## Finding Elements
-
-A search space is only a place where certain items are. However, those elements appear
-under the presence of a sampler. Let's find the argument that minimizes function.
-
-Finding the argument that minimizes a given function.
-
-```@repl basic
-using SearchSpaces
-searchspace = MixedSpace(:N=>1:50, :flag => [true, false], :p =>BoxConstrainedSpace(0.0, 1));
-f(x) = x[:flag] ? sum(1:x[:N])-x[:p] : x[:p] + sum(1:x[:N])
-argmin(f, Grid(searchspace))
-```
 
 ## Defining Search Spaces
 
-### PermutationSpace
+### Permutation Space
 
 ```@repl basic
+using SearchSpaces
 PermutationSpace(5)
 PermutationSpace([:red, :green, :blue])
 PermutationSpace([:red, :green, :blue, :alpha], 2)
@@ -31,13 +19,20 @@ PermutationSpace([:red, :green, :blue, :alpha], 2)
 BitArraySpace(4)
 ```
 
-### BoxConstrainedSpace
+### Box-Constrained Space (Hyperrectangle)
 
 ```@repl basic
 BoxConstrainedSpace(lb = 1.1, ub = 4.1)
 BoxConstrainedSpace(lb = zeros(5), ub = ones(5))
 BoxConstrainedSpace(lb = fill(-10, 3), ub = fill(10, 3))
 BoxConstrainedSpace(lb = zeros(2), ub = ones(2), rigid=false)
+```
+
+An interval can be defined as:
+
+
+```@repl basic
+my_interval = (-π..π)
 ```
 
 ### Mixed spaces
@@ -117,6 +112,24 @@ Cardinality (number of elements)
 
 ```@example random_sample
 cardinality(mixed)
+```
+
+
+## Finding Elements
+
+A search space is only a place where certain items are. However, those elements appear
+under the presence of a sampler. Let's find the argument that minimizes function.
+
+Finding the argument that minimizes a given function.
+
+```@repl basic
+searchspace = MixedSpace(
+                    :N    => 1:50,
+                    :flag => [true, false],
+                    :p    => BoxConstrainedSpace(0.0, 1)
+                    );
+f(x) = x[:flag] ? sum(1:x[:N])-x[:p] : x[:p] + sum(1:x[:N])
+argmin(f, Grid(searchspace))
 ```
 
 ## Cardinality
