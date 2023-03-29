@@ -26,7 +26,7 @@ BitArraySpace
 ### Box-Constrained Space (Box-space)
 
 
-```julia-repl
+```@docs
 BoxConstrainedSpace
 ```
 
