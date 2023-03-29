@@ -20,34 +20,65 @@ or
 julia> import Pkg; Pkg.add("SearchSpaces")
 ```
 
+Please, visit the [documentation](https://jmejia8.github.io/SearchSpaces.jl/stable/).
+
 ## Usage
 
-**Bounds**
+Assume the following three search spaces: 
 
-```julia
-using SearchSpaces
-
-# define upper and lower bounds
-bounds = Bounds(lb = [-1.0, -1, -1], ub = [2.0, 3, 4])
-
-# Sample a random element in bounds
-rand(bounds)
-# sample several
-rand(bounds, 11)
+```math
+\begin{matrix}
+X = &\{10, 20, \ldots, 50\}\\
+Y = &\{\text{red},\ \text{green},\ \text{blue}\}\\
+Z = &\{0, 0.1, 0.2, \ldots, 1\}
+\end{matrix}
 ```
 
-Se [here](https://jmejia8.github.io/SearchSpaces.jl/stable/examples/) for more examples.
+Let us define a mixed space $X \times Y \times Z$. Here, we can proceed as follows:
 
 
-## API
+```julia
+julia> using SearchSpaces
+
+julia> searchspace = MixedSpace(
+                         :X => 10:10:50,
+                         :Y => [:red, :green, :blue],
+                         :Z => 0:0.1:1
+                         );
+
+julia> cardinality(searchspace)
+165
+
+julia> rand(searchspace)
+Dict{Symbol, Any} with 3 entries:
+  :Z => 0.1
+  :X => 50
+  :Y => :green
+
+julia> collect(Grid(searchspace))
+165-element Vector{Any}:
+ Dict{Symbol, Any}(:Z => 0.0, :X => 10, :Y => :red)
+ Dict{Symbol, Any}(:Z => 0.1, :X => 10, :Y => :red)
+ Dict{Symbol, Any}(:Z => 0.2, :X => 10, :Y => :red)
+ ⋮
+ Dict{Symbol, Any}(:Z => 0.8, :X => 50, :Y => :blue)
+ Dict{Symbol, Any}(:Z => 0.9, :X => 50, :Y => :blue)
+ Dict{Symbol, Any}(:Z => 1.0, :X => 50, :Y => :blue)
+```
+
+See [here](https://jmejia8.github.io/SearchSpaces.jl/stable/examples/) for more examples.
 
 
-Implemented search spaces and method:
+## Search Spaces
 
-- `Bounds{T}`: Defined by bounds for numeric values `T`.
-- `Permutations(dim)`: Space containing permutations with dimension `dim`.
-- `BitArrays(dim)`: Space containing bit arrays with dimension `dim`.
-- `MixedSpace(:space => AtomicSearchSpace...)`: Search spaces composed of other search spaces.
-- `cardinality`: to get the cardinality of the search space.
-- `AtomicSearchSpace` is an abstract type to define primitive search spaces.
+Implemented search spaces:
 
+```julia
+julia> subtypes(SearchSpaces.AtomicSearchSpace)
+4-element Vector{Any}:
+ BitArraySpace
+ BoxConstrainedSpace
+ CombinationSpace
+ PermutationSpace
+```
+And more can be found [here](https://jmejia8.github.io/SearchSpaces.jl/dev/searchspaces/).
