@@ -1,34 +1,5 @@
 # API references
 
-## Search Spaces
-
-The search spaces can be defined as follows.
-
-### $k$-Permutation Space
-
-```@docs
-PermutationSpace
-```
-
-### Category Space
-
-```@docs
-CategorySpace
-```
-
-### Bit Arrays
-
-
-```@docs
-BitArraySpace
-```
-
-### Box-Constrained Space (Box-space)
-
-
-```@docs
-BoxConstrainedSpace
-```
 
 ## Built-in Samplers
 

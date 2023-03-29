@@ -169,7 +169,7 @@ cardinality(space)
 
 
 Once a search space is defined, maybe we would like to know whether an element is in the
-search space. We can use the `in` method:
+search space. We can use the [`in`](@ref) method:
 
 
 ```@repl basic

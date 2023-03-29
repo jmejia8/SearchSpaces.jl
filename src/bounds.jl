@@ -18,6 +18,16 @@ end
     BoxConstrainedSpace(;lb, ub, rigid=true)
 
 Define a search space delimited by box constraints.
+
+# Example
+
+```julia-repl
+julia> space = BoxConstrainedSpace(lb = zeros(Int, 5), ub = ones(Int, 5))
+BoxConstrainedSpace{Int64}([0, 0, 0, 0, 0], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], 5, true)
+
+julia> cardinality(space)
+32
+```
 """
 function BoxConstrainedSpace(lb::AbstractVector, ub::AbstractVector; rigid=true)
     @assert _valid_bounds(lb, ub) "Check size of lb and ub, and also lb[i] <= ub[i]."
@@ -37,6 +47,21 @@ end
 """
     ..(a, b)
 Define a interval between a and b (inclusive).
+
+# Example
+
+```julia-repl
+julia> my_interval = (-π..π)
+
+julia> rand(my_interval, 5)
+5-element Vector{Float64}:
+ 0.5111482297554093
+ 1.1984728844571544
+ 1.3279941255812906
+ 2.3429444282250502
+ 3.0495310142685526
+```
+
 See also [`BoxConstrainedSpace`](@ref)
 """
 ..(a::Real, b::Real) = BoxConstrainedSpace(a, b)

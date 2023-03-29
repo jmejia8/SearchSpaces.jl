@@ -10,6 +10,7 @@ makedocs(
          authors = "Jesus-Adolfo Mejia-de-Dios",
          pages = [
                   "Index" => "index.md",
+                  "Search Spaces" =>  "searchspaces.md",
                   "Examples" =>  "examples.md",
                   "API References" => "api.md",
                  ],
