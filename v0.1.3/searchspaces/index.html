@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Search Spaces · SearchSpaces.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="../assets/extra_styles.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../"><img src="../assets/logo.svg" alt="SearchSpaces.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../">SearchSpaces.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Index</a></li><li class="is-active"><a class="tocitem" href>Search Spaces</a><ul class="internal"><li><a class="tocitem" href="#Bit-Array-Space"><span>Bit Array Space</span></a></li><li><a class="tocitem" href="#Box-Constrained-Space-(Hyperrectangle)"><span>Box-Constrained Space (Hyperrectangle)</span></a></li><li><a class="tocitem" href="#Combination-Space"><span>Combination Space</span></a></li><li><a class="tocitem" href="#k-Permutation-Space"><span><span>$k$</span>-Permutation Space</span></a></li><li><a class="tocitem" href="#Category-Space"><span>Category Space</span></a></li><li><a class="tocitem" href="#Mixed-Space"><span>Mixed Space</span></a></li></ul></li><li><a class="tocitem" href="../examples/">Examples</a></li><li><a class="tocitem" href="../api/">API References</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Search Spaces</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Search Spaces</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/jmejia8/SearchSpaces.jl/blob/main/docs/src/searchspaces.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Search-Spaces"><a class="docs-heading-anchor" href="#Search-Spaces">Search Spaces</a><a id="Search-Spaces-1"></a><a class="docs-heading-anchor-permalink" href="#Search-Spaces" title="Permalink"></a></h1><p>Search spaces are divided in two main types: <em>Atomic Search Spaces</em> and <em>Mixed Spaces</em>.</p><p>Atomic search spaces are those defined by themselves.</p><pre><code class="nohighlight hljs ansi" style="display:block;"></code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; using SearchSpaces</code><code class="nohighlight hljs ansi" style="display:block;"></code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; subtypes(SearchSpaces.AtomicSearchSpace)</code><code class="nohighlight hljs ansi" style="display:block;">4-element Vector{Any}:
+ BitArraySpace
+ BoxConstrainedSpace
+ CombinationSpace
+ PermutationSpace</code></pre><h2 id="Bit-Array-Space"><a class="docs-heading-anchor" href="#Bit-Array-Space">Bit Array Space</a><a id="Bit-Array-Space-1"></a><a class="docs-heading-anchor-permalink" href="#Bit-Array-Space" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-binding" id="SearchSpaces.BitArraySpace" href="#SearchSpaces.BitArraySpace"><code>SearchSpaces.BitArraySpace</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">BitArraySpace(;dim)</code></pre><p>Define a search space delimited by bit arrays.</p><p><strong>Example</strong></p><pre><code class="language-julia-repl hljs">julia&gt; space = BitArraySpace(4)
+BitArraySpace(4)
+
+julia&gt; rand(space, 7)
+7-element Vector{Vector{Bool}}:
+ [0, 1, 1, 0]
+ [0, 0, 0, 1]
+ [1, 1, 1, 0]
+ [0, 0, 0, 1]
+ [0, 1, 0, 1]
+ [1, 1, 1, 0]
+ [1, 0, 0, 0]</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/jmejia8/SearchSpaces.jl/blob/2fc47d3d642f9a19b6c10b24bcaaea129352bb94/src/bitarrays.jl#L5-L27">source</a></section></article><h2 id="Box-Constrained-Space-(Hyperrectangle)"><a class="docs-heading-anchor" href="#Box-Constrained-Space-(Hyperrectangle)">Box-Constrained Space (Hyperrectangle)</a><a id="Box-Constrained-Space-(Hyperrectangle)-1"></a><a class="docs-heading-anchor-permalink" href="#Box-Constrained-Space-(Hyperrectangle)" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-binding" id="SearchSpaces.BoxConstrainedSpace" href="#SearchSpaces.BoxConstrainedSpace"><code>SearchSpaces.BoxConstrainedSpace</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">BoxConstrainedSpace(;lb, ub, rigid=true)</code></pre><p>Define a search space delimited by box constraints.</p><p><strong>Example</strong></p><pre><code class="language-julia-repl hljs">julia&gt; space = BoxConstrainedSpace(lb = zeros(Int, 5), ub = ones(Int, 5))
+BoxConstrainedSpace{Int64}([0, 0, 0, 0, 0], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], 5, true)
+
+julia&gt; cardinality(space)
+32</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/jmejia8/SearchSpaces.jl/blob/2fc47d3d642f9a19b6c10b24bcaaea129352bb94/src/bounds.jl#L17-L31">source</a></section></article><h2 id="Combination-Space"><a class="docs-heading-anchor" href="#Combination-Space">Combination Space</a><a id="Combination-Space-1"></a><a class="docs-heading-anchor-permalink" href="#Combination-Space" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-binding" id="SearchSpaces.CombinationSpace" href="#SearchSpaces.CombinationSpace"><code>SearchSpaces.CombinationSpace</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">CombinationSpace(values; k)
+CombinationSpace(k)</code></pre><p>Define a search space defined by the combinations (with replacement) of size k.</p><p><strong>Example</strong></p><pre><code class="language-julia-repl hljs">julia&gt; space = CombinationSpace(3)
+CombinationSpace{UnitRange{Int64}}(1:3, 3)
+
+julia&gt; rand(space)
+3-element Vector{Int64}:
+ 1
+ 1
+ 2
+
+julia&gt; rand(space,7)
+7-element Vector{Vector{Int64}}:
+ [1, 1, 1]
+ [2, 1, 1]
+ [2, 2, 1]
+ [2, 3, 3]
+ [1, 3, 1]
+ [2, 1, 2]
+ [2, 3, 1]
+
+julia&gt; rand(CombinationSpace([:apple, :orange, :onion, :garlic]))
+4-element Vector{Symbol}:
+ :apple
+ :orange
+ :orange
+ :apple</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/jmejia8/SearchSpaces.jl/blob/2fc47d3d642f9a19b6c10b24bcaaea129352bb94/src/combinations.jl#L6-L41">source</a></section></article><h2 id="k-Permutation-Space"><a class="docs-heading-anchor" href="#k-Permutation-Space"><span>$k$</span>-Permutation Space</a><a id="k-Permutation-Space-1"></a><a class="docs-heading-anchor-permalink" href="#k-Permutation-Space" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-binding" id="SearchSpaces.PermutationSpace" href="#SearchSpaces.PermutationSpace"><code>SearchSpaces.PermutationSpace</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">PermutationSpace(values; k)
+PermutationSpace(k)</code></pre><p>Define a search space defined by permuting the values of size k (k-permutations).</p><pre><code class="language-julia-repl hljs">julia&gt; space = PermutationSpace([:red, :green, :blue])
+PermutationSpace{Vector{Symbol}}([:red, :green, :blue], 3)
+
+julia&gt; rand(space, 5)
+5-element Vector{Vector{Symbol}}:
+ [:blue, :green, :red]
+ [:red, :blue, :green]
+ [:blue, :green, :red]
+ [:green, :blue, :red]
+ [:red, :blue, :green]
+
+julia&gt; Grid(PermutationSpace(3)) |&gt; collect
+6-element Vector{Any}:
+ [1, 2, 3]
+ [1, 3, 2]
+ [2, 1, 3]
+ [2, 3, 1]
+ [3, 1, 2]
+ [3, 2, 1]</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/jmejia8/SearchSpaces.jl/blob/2fc47d3d642f9a19b6c10b24bcaaea129352bb94/src/permutations.jl#L17-L44">source</a></section></article><h2 id="Category-Space"><a class="docs-heading-anchor" href="#Category-Space">Category Space</a><a id="Category-Space-1"></a><a class="docs-heading-anchor-permalink" href="#Category-Space" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-binding" id="SearchSpaces.CategorySpace" href="#SearchSpaces.CategorySpace"><code>SearchSpaces.CategorySpace</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">CategorySpace(categories)</code></pre><p>Define a search space given by the provided categories (<code>Vector</code>).</p><p><strong>Example</strong></p><pre><code class="language-julia-repl hljs">julia&gt; space = CategorySpace([:soft, :medium, :high]);
+
+julia&gt; rand(space)
+:soft
+
+julia&gt; cardinality(space)
+3</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/jmejia8/SearchSpaces.jl/blob/2fc47d3d642f9a19b6c10b24bcaaea129352bb94/src/categorical.jl#L1-L17">source</a></section></article><h2 id="Mixed-Space"><a class="docs-heading-anchor" href="#Mixed-Space">Mixed Space</a><a id="Mixed-Space-1"></a><a class="docs-heading-anchor-permalink" href="#Mixed-Space" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-binding" id="SearchSpaces.MixedSpace" href="#SearchSpaces.MixedSpace"><code>SearchSpaces.MixedSpace</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">MixedSpace([itr])</code></pre><p>Construct a search space.</p><p><strong>Example</strong></p><pre><code class="language-julia-repl hljs">julia&gt; space = MixedSpace( :X =&gt; BoxConstrainedSpace(lb = [-1.0, -3.0], ub = [10.0, 10.0]),
+                          :Y =&gt; PermutationSpace(10),
+                          :Z =&gt; BitArraySpace(dim = 10)
+                          ) 
+MixedSpace defined by 3 subspaces:
+X =&gt; BoxConstrainedSpace{Float64}([-1.0, -3.0], [10.0, 10.0], [11.0, 13.0], 2, true)
+Y =&gt; PermutationSpace{Vector{Int64}}([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10)
+Z =&gt; BitArraySpace(10)
+
+
+julia&gt; rand(space)
+Dict{Symbol, Vector} with 3 entries:
+  :Z =&gt; Bool[0, 1, 0, 0, 0, 0, 0, 1, 1, 0]
+  :X =&gt; [0.367973, 4.62101]
+  :Y =&gt; [4, 3, 9, 1, 7, 2, 10, 8, 5, 6]</code></pre><p>See also <a href="../searchspaces/#SearchSpaces.:×"><code>×</code></a></p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/jmejia8/SearchSpaces.jl/blob/2fc47d3d642f9a19b6c10b24bcaaea129352bb94/src/mixedspace.jl#L6-L32">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="SearchSpaces.:×" href="#SearchSpaces.:×"><code>SearchSpaces.:×</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">A × B</code></pre><p>Return the mixed space using Cartesian product.</p><p><strong>Example</strong></p><pre><code class="language-julia-repl hljs">julia&gt; bounds = BoxConstrainedSpace(lb = zeros(Int, 5), ub = ones(Int, 5));
+
+julia&gt; permutations = PermutationSpace([:red, :green, :blue]);
+
+julia&gt; bits = BitArraySpace(3);
+
+julia&gt; mixed = bounds × permutations × bits
+MixedSpace defined by 3 subspaces:
+S3 =&gt; BitArraySpace(3)
+S2 =&gt; PermutationSpace{Vector{Symbol}}([:red, :green, :blue], 3)
+S1 =&gt; BoxConstrainedSpace{Int64}([0, 0, 0, 0, 0], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], 5, true)
+
+julia&gt; cardinality(mixed)
+1536
+
+julia&gt; rand(mixed)
+Dict{Symbol, Vector} with 3 entries:
+  :S2 =&gt; [:red, :blue, :green]
+  :S1 =&gt; [0, 1, 0, 0, 1]
+  :S3 =&gt; Bool[1, 1, 0]</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/jmejia8/SearchSpaces.jl/blob/2fc47d3d642f9a19b6c10b24bcaaea129352bb94/src/mixedspace.jl#L37-L66">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Index</a><a class="docs-footer-nextpage" href="../examples/">Examples »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.24 on <span class="colophon-date" title="Wednesday 29 March 2023 19:22">Wednesday 29 March 2023</span>. Using Julia version 1.7.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
