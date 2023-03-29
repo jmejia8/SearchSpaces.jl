@@ -9,14 +9,14 @@ Just a simple Julia package to define search spaces for, perhaps, optimization.
 
 Open Julia (v1.7 or latest) and type the following command:
 
-```
+```julia-repl
 julia> ]add SearchSpaces
 ```
 
 or 
 
 
-```julia
+```julia-repl
 julia> import Pkg; Pkg.add("SearchSpaces")
 ```
 

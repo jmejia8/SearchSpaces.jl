@@ -9,40 +9,40 @@ Aqua.test_all(SearchSpaces)
 # put here example of search spaces
 const AVAILABLE_SPACES = [
                           # variants for defining permutations
-                          Permutations(5),
-                          Permutations([:red, :green, :blue]),
-                          Permutations([:red, :green, :blue, :alpha], 2),
-                          Combinations([:red, :green, :blue, :alpha], 2),
-                          Combinations([:red, :green, :blue]),
-                          Combinations(5),
+                          PermutationSpace(5),
+                          PermutationSpace([:red, :green, :blue]),
+                          PermutationSpace([:red, :green, :blue, :alpha], 2),
+                          CombinationSpace([:red, :green, :blue, :alpha], 2),
+                          CombinationSpace([:red, :green, :blue]),
+                          CombinationSpace(5),
                           # variants for defining bit arrays
-                          BitArrays(4),
+                          BitArraySpace(4),
                           # defining different type of bounds
-                          Bounds(lb = 1.1, ub = 4.1),
-                          Bounds(lb = zeros(5), ub = ones(5)),
-                          Bounds(lb = fill(-10, 3), ub = fill(10, 3)),
-                          Bounds(lb = zeros(2), ub = ones(2), rigid=false),
+                          BoxConstrainedSpace(lb = 1.1, ub = 4.1),
+                          BoxConstrainedSpace(lb = zeros(5), ub = ones(5)),
+                          BoxConstrainedSpace(lb = fill(-10, 3), ub = fill(10, 3)),
+                          BoxConstrainedSpace(lb = zeros(2), ub = ones(2), rigid=false),
                           # mixed search space
-                          MixedSpace(:X => Permutations(3),
-                                     :Y => BitArrays(3),
-                                     :Z => Bounds(lb = zeros(2), ub = ones(2)),
+                          MixedSpace(:X => PermutationSpace(3),
+                                     :Y => BitArraySpace(3),
+                                     :Z => BoxConstrainedSpace(lb = zeros(2), ub = ones(2)),
                                     ) ,
                           # mixed with native iterators
-                          MixedSpace(:x => 1:10, :y => [:red, :green], :z => Permutations(1:3))
+                          MixedSpace(:x => 1:10, :y => [:red, :green], :z => PermutationSpace(1:3))
                          ]
 
 const AVAILABLE_SAMPLERS = [Grid, AtRandom]
 
 @testset verbose = true "API" begin
 
-    @testset "Bounds" begin
-        bounds = Bounds(lb = [0, -5], ub = [10, 5])
+    @testset "BoxConstrainedSpace" begin
+        bounds = BoxConstrainedSpace(lb = [0, -5], ub = [10, 5])
         @test cardinality(bounds) == 11*11
         @test [1, 3] in bounds
         @test !([1, 3, 1] in bounds)
         @test !([1000, 3] in bounds)
 
-        bounds_c = Bounds(lb = [-1.0, -1.0], ub = [3.0, 2.0])
+        bounds_c = BoxConstrainedSpace(lb = [-1.0, -1.0], ub = [3.0, 2.0])
         @test !isfinite(cardinality(bounds_c))
         @test isinbounds(zeros(2), bounds_c)
         @test !isinbounds(fill(-1000, 2), bounds_c)
@@ -51,8 +51,8 @@ const AVAILABLE_SAMPLERS = [Grid, AtRandom]
         @test !([0.4, 0.3, 0.1] in bounds_c)
     end
 
-    @testset "Permutations" begin
-        perms  = Permutations(5)
+    @testset "PermutationSpace" begin
+        perms  = PermutationSpace(5)
         @test cardinality(perms)  == prod(2:5)
         @test ispermutation(1:perms.dim, perms)
         @test !ispermutation(ones(Int, 5), perms)
@@ -60,28 +60,28 @@ const AVAILABLE_SAMPLERS = [Grid, AtRandom]
         @test !(collect(1:3) in perms)
         @test !([1,2,2,2,5] in perms)
 
-        perms  = Permutations([:red, :green, :blue, :alpha, :pink], 3)
+        perms  = PermutationSpace([:red, :green, :blue, :alpha, :pink], 3)
         @test ispermutation([:alpha, :green, :pink], perms)
         @test !ispermutation([:alpha , :pink], perms)
         @test !ispermutation([:green, :green, :red], perms)
     end
 
-    @testset "Combinations" begin
-        comb  = Combinations(1:10, 3)
+    @testset "CombinationSpace" begin
+        comb  = CombinationSpace(1:10, 3)
         @test cardinality(comb)  == 220
         @test iscombination(ones(Int, 3), comb)
         @test !(collect(1:5) in comb)
         @test collect(1:3) in comb
         @test !([1,2,2,2,5] in comb)
 
-        comb  = Combinations([:red, :green, :blue], 6)
+        comb  = CombinationSpace([:red, :green, :blue], 6)
         @test iscombination(fill(:green, 6), comb)
         @test !iscombination([:alpha , :pink], comb)
         @test !iscombination([:green, :green, :red], comb)
     end
 
-    @testset "BitArrays" begin
-        bits   = BitArrays(dim = 3)
+    @testset "BitArraySpace" begin
+        bits   = BitArraySpace(dim = 3)
         @test cardinality(bits)   == 8
         @test rand(Bool, 3) in bits
         @test !(rand(Bool, 4) in bits)
@@ -89,9 +89,9 @@ const AVAILABLE_SAMPLERS = [Grid, AtRandom]
     end
 
     @testset "MixedSpace" begin
-        bounds = Bounds(lb = [0, -5], ub = [10, 5])
-        perms  = Permutations(5)
-        bits   = BitArrays(dim = 3)
+        bounds = BoxConstrainedSpace(lb = [0, -5], ub = [10, 5])
+        perms  = PermutationSpace(5)
+        bits   = BitArraySpace(dim = 3)
         ss = MixedSpace( :X => bounds,
                          :Y => perms,
                          :Z => bits
