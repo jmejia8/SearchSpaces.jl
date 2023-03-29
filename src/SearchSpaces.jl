@@ -20,6 +20,7 @@ include("aliases.jl")
 export MixedSpace, Grid, cardinality
 export  isinbounds, ispermutation, Variable, @var, AtRandom, isinspace, CategorySpace
 export ×
+export ..
 export iscombination
 export BoxConstrainedSpace,PermutationSpace,BitArraySpace,CategorySpace, CombinationSpace
 

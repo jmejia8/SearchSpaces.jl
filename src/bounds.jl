@@ -34,6 +34,14 @@ function BoxConstrainedSpace(lb::Real, ub::Real; rigid=true)
     BoxConstrainedSpace([lb], [ub]; rigid)
 end
 
+"""
+    ..(a, b)
+Define a interval between a and b (inclusive).
+See also [`BoxConstrainedSpace`](@ref)
+"""
+..(a::Real, b::Real) = BoxConstrainedSpace(a, b)
+..(a::Bool, b::Bool) = BitArraySpace(1)
+
 function cardinality(searchspace::BoxConstrainedSpace{T}) where T <: Integer
     prod(searchspace.ub - searchspace.lb .+ one(T))
 end
