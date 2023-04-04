@@ -19,25 +19,17 @@ function value(sampler::Sampler{S, B}) where {S<:AbstractRNGSampler,B<:BoxConstr
     _get_random(searchspace, parameters.rng)
 end
 
-function GridSampler(bnds::BoxConstrainedSpace{T}; npartitions = 3) where T <: Integer
-    d = getdim(bnds)
-    it = Iterators.product(
-                           (a:b for (a, b) in zip(bnds.lb, bnds.ub))...
-                          )
 
-    Sampler(GridSampler(npartitions, (it, nothing)), bnds, length(it))
+function get_iterator(bnds::BoxConstrainedSpace{<: Integer};kargs...)
+    Iterators.product((a:b for (a, b) in zip(bnds.lb, bnds.ub))...)
 end
 
-function GridSampler(bnds::BoxConstrainedSpace; npartitions = 3)
-    d = getdim(bnds)
-
-    it = Iterators.product(
-                           (
-                            range(a, b, length = npartitions) 
-                            for (a, b) in zip(bnds.lb, bnds.ub)
-                           )...
-                          )
-
-    Sampler(GridSampler(npartitions, (it, nothing)), bnds, length(it))
+function get_iterator(bnds::BoxConstrainedSpace; npartitions = 3)
+    Iterators.product(
+                      (
+                       range(a, b, length = npartitions) 
+                       for (a, b) in zip(bnds.lb, bnds.ub)
+                      )...
+                     )
 end
 

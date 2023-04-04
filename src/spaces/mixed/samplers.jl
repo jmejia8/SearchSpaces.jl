@@ -1,8 +1,6 @@
-function GridSampler(searchspace::MixedSpace; npartitions = 3)
+function get_iterator(searchspace::MixedSpace; npartitions = 3)
     ks = keys(searchspace.domain)
-    it = Iterators.product((GridSampler(searchspace.domain[k];npartitions) for k in ks)...)
-
-    Sampler(GridSampler(npartitions, (it, nothing)), searchspace, length(it))
+    Iterators.product((GridSampler(searchspace.domain[k];npartitions) for k in ks)...)
 end
 
 function Sampler(sampler, searchspace::MixedSpace)

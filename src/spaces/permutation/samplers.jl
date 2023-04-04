@@ -13,8 +13,7 @@ function value(sampler::Sampler{R, P}) where {R<:AbstractRNGSampler, P<:Permutat
     Random.shuffle(parameters.rng, searchspace.values)[1:getdim(searchspace)]
 end
 
-function GridSampler(searchspace::PermutationSpace; npartitions = 0)
-    it = Combinatorics.permutations(searchspace.values, searchspace.dim)
-    Sampler(GridSampler(npartitions, (it, nothing)), searchspace)
+function get_iterator(searchspace::PermutationSpace; kargs...)
+    Combinatorics.permutations(searchspace.values, searchspace.dim)
 end
 

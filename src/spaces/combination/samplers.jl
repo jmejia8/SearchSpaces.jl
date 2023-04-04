@@ -1,6 +1,3 @@
-#####################
-# Related to SAMPLER
-#####################
 function value(sampler::Sampler{R, P}) where {R<:AbstractRNGSampler, P<:CombinationSpace}
     parameters = sampler.method
     searchspace = sampler.searchspace
@@ -12,8 +9,8 @@ function value(sampler::Sampler{R, P}) where {R<:AbstractRNGSampler, P<:Combinat
     rand(parameters.rng, searchspace.values, getdim(searchspace))
 end
 
-function GridSampler(searchspace::CombinationSpace; npartitions = 0)
-    it = Combinatorics.with_replacement_combinations(searchspace.values, searchspace.dim)
-    Sampler(GridSampler(npartitions, (it, nothing)), searchspace)
+
+function get_iterator(searchspace::CombinationSpace; kargs...)
+    Combinatorics.with_replacement_combinations(searchspace.values, searchspace.dim)
 end
 

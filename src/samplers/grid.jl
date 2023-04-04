@@ -60,6 +60,27 @@ mutable struct GridSampler <: AbstractSampler
     iterator::Tuple
 end
 
+"""
+    get_iterator(searchspace, [npartitions=3])
+
+Get the iterator for the GridSampler.
+"""
+function get_iterator(s::T;kargs...) where T <: AbstractSearchSpace
+    error("Define `get_iterator(space::T) where T <: $T` before sampling.")
+end
+
+function GridSampler(searchspace::AbstractSearchSpace; npartitions = 3)
+    it = get_iterator(searchspace; npartitions)
+
+    n = 0
+    try 
+        n = length(it)
+    catch
+        n = cardinality(searchspace)
+    end
+
+    Sampler(GridSampler(npartitions, (it, nothing)), searchspace, n)
+end
 
 function value(sampler::Sampler{G, S}) where {G<:GridSampler,S<:AtomicSearchSpace}
     it, n = sampler.method.iterator
