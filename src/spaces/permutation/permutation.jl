@@ -32,7 +32,7 @@ julia> rand(space, 5)
  [:green, :blue, :red]
  [:red, :blue, :green]
 
-julia> Grid(PermutationSpace(3)) |> collect
+julia> GridSampler(PermutationSpace(3)) |> collect
 6-element Vector{Any}:
  [1, 2, 3]
  [1, 3, 2]
@@ -47,20 +47,23 @@ function PermutationSpace(values::AbstractVector; k = length(values))
     PermutationSpace(values, k)
 end
 
-function value(sampler::Sampler{R, P}) where {R<:AbstractRNGSampler, P<:PermutationSpace}
-    parameters = sampler.method
-    searchspace = sampler.searchspace
-    if searchspace.dim == length(searchspace.values)
-        return Random.shuffle(parameters.rng, searchspace.values)
-    end
 
-    if searchspace.dim == 1
-        return rand(parameters.rng, searchspace.values)
-    end
+"""
+    ispermutation(item, searchspace) --> Bool
 
-    # TODO improve this
-    Random.shuffle(parameters.rng, searchspace.values)[1:getdim(searchspace)]
-end
+Determine whether an item is in the given searchspace.
+"""
+ispermutation(x, searchspace::PermutationSpace) = x in searchspace.values
+
+"""
+    isinspace(item, searchspace) --> Bool
+
+Determine whether an item is in the given searchspace.
+
+See also [`in`](@ref).
+"""
+isinspace(x, searchspace::PermutationSpace) = ispermutation(x, searchspace)
+
 
 function cardinality(searchspace::PermutationSpace)
     n = length(searchspace.values)
@@ -100,27 +103,3 @@ function ispermutation(x::AbstractVector, searchspace::PermutationSpace)
     end
     true
 end
-
-
-
-"""
-    ispermutation(item, searchspace) --> Bool
-
-Determine whether an item is in the given searchspace.
-"""
-ispermutation(x, searchspace::PermutationSpace) = x in searchspace.values
-
-"""
-    isinspace(item, searchspace) --> Bool
-
-Determine whether an item is in the given searchspace.
-
-See also [`in`](@ref).
-"""
-isinspace(x, searchspace::PermutationSpace) = ispermutation(x, searchspace)
-
-function Grid(searchspace::PermutationSpace; npartitions = 0)
-    it = Combinatorics.permutations(searchspace.values, searchspace.dim)
-    Sampler(Grid(npartitions, (it, nothing)), searchspace)
-end
-

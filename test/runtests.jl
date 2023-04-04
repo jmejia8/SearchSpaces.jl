@@ -31,7 +31,7 @@ const AVAILABLE_SPACES = [
                           MixedSpace(:x => 1:10, :y => [:red, :green], :z => PermutationSpace(1:3))
                          ]
 
-const AVAILABLE_SAMPLERS = [Grid, AtRandom]
+const AVAILABLE_SAMPLERS = [GridSampler, RandomSampler]
 
 @testset verbose = true "API" begin
 
@@ -135,8 +135,8 @@ const AVAILABLE_SAMPLERS = [Grid, AtRandom]
 
     # check length of the grid
     for searchspace in AVAILABLE_SPACES
-        sampler = Grid(searchspace)
-        # check length in Grid
+        sampler = GridSampler(searchspace)
+        # check length in GridSampler
         @test length(collect(sampler)) == length(sampler)
         # check random generators
         @test isinspace(rand(searchspace), searchspace)
