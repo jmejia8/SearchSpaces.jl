@@ -4,11 +4,11 @@
 ## Built-in Samplers
 
 ```@docs
-Grid
+GridSampler
 ```
 
 ```@docs
-AtRandom
+RandomSampler
 ```
 
 ## Miscellaneous

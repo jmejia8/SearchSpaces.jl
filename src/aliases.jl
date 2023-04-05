@@ -9,5 +9,5 @@ const Hyperrectangle = BoxConstrainedSpace
 @deprecate Combinations(args...;kargs...)   CombinationSpace(args...;kargs...)
 =#
 
-@deprecate Grid(args...;kargs...) GridSampler(args...;kargs...)
-@deprecate AtRandom(args...;kargs...) AtRandom(args...;kargs...)
+@deprecate Grid(args...;kargs...)     GridSampler(args...;kargs...)
+@deprecate AtRandom(args...;kargs...) RandomSampler(args...;kargs...)

@@ -74,7 +74,7 @@ Implemented samplers return an iterator to avoid memory overflow.
 
 ```@example random_sample
 search_space = PermutationSpace([:red, :green, :blue])
-for x in Grid(search_space)
+for x in GridSampler(search_space)
     @show x
 end
 ```
@@ -82,7 +82,7 @@ end
 Similarly:
 
 ```@example random_sample
-Grid(PermutationSpace([:red, :green, :blue])) |> collect
+GridSampler(PermutationSpace([:red, :green, :blue])) |> collect
 ```
 
 ## Mixing Spaces
@@ -129,7 +129,7 @@ searchspace = MixedSpace(
                     :p    => BoxConstrainedSpace(0.0, 1)
                     );
 f(x) = x[:flag] ? sum(1:x[:N])-x[:p] : x[:p] + sum(1:x[:N])
-argmin(f, Grid(searchspace))
+argmin(f, GridSampler(searchspace))
 ```
 
 ## Cardinality
