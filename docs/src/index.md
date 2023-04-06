@@ -63,7 +63,7 @@ rand(searchspace)
 To sample every element in the search space, we can use the grid sampler:
 
 ```@repl index
-collect(Grid(searchspace))
+collect(GridSampler(searchspace))
 ```
 
 
