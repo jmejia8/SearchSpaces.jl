@@ -1,45 +1,97 @@
 # Examples
 
+Some examples on using the package.
 
 ## Defining Search Spaces
 
+The available search spaces can be defined using different methods, depending
+on the requirements.
+
 ### Permutation Space
+
+Firstly, import the package.
 
 ```@repl basic
 using SearchSpaces
-PermutationSpace(5)
-PermutationSpace([:red, :green, :blue])
-PermutationSpace([:red, :green, :blue, :alpha], 2)
+```
+
+Define a search space defined by permuting five positive integers $1,2,\ldots, 5$.
+
+```@repl basic
+space = PermutationSpace(5)
+rand(space) # sample one random element
+```
+Permutations of an array of elements:
+
+```@repl basic
+space = PermutationSpace([:red, :green, :blue])
+rand(space)
+```
+k-permutation of elements:
+
+```@repl basic
+k = 2
+space = PermutationSpace([:red, :green, :blue, :alpha], k)
+rand(space)
 ```
 
 
 ### Bit arrays
 
+An array of bits can be defining by providing the number of bits:
+
 ```@repl basic
-BitArraySpace(4)
+n_bits = 4
+space = BitArraySpace(n_bits)
+rand(space)
 ```
 
 ### Box-Constrained Space (Hyperrectangle)
 
+A box-constrained space (a.k.a. hyperrectangle) is defined by providing
+lower bounds and lower bounds.
+
+Defining a 5-dimensional hyperrectangle with vertices in 0 and 1.
+
 ```@repl basic
-BoxConstrainedSpace(lb = 1.1, ub = 4.1)
-BoxConstrainedSpace(lb = zeros(5), ub = ones(5))
-BoxConstrainedSpace(lb = fill(-10, 3), ub = fill(10, 3))
-BoxConstrainedSpace(lb = zeros(2), ub = ones(2), rigid=false)
+space = BoxConstrainedSpace(lb = zeros(5), ub = ones(5))
+rand(space)
+```
+
+A 3-dimensional integer box-constrained space with values between -10 and 10.
+
+```@repl basic
+space = BoxConstrainedSpace(lb = fill(-10, 3), ub = fill(10, 3))
+rand(space)
+```
+
+By default, the lower and upper bounds are rigid, one can specify whether the bounds
+are rigid or not.
+
+```@repl basic
+space = BoxConstrainedSpace(lb = zeros(2), ub = ones(2), rigid=false)
 ```
 
 An interval can be defined as:
 
-
 ```@repl basic
 my_interval = (-π..π)
+rand(my_interval)
 ```
 
 ### Mixed spaces
 
+Mixed space can be compose using Cartesian product.
+
 ```@repl basic
-MixedSpace(:X => PermutationSpace(3), :Y => BitArraySpace(3), :Z => BoxConstrainedSpace(lb = zeros(2), ub = ones(2)))
-MixedSpace(:x => 1:10, :y => [:red, :green], :z => PermutationSpace(1:3))
+space = MixedSpace(:X => PermutationSpace(3), :Y => BitArraySpace(3), :Z => BoxConstrainedSpace(lb = zeros(2), ub = ones(2)))
+rand(space)
+```
+
+
+```@repl basic
+space = MixedSpace(:x => 1:10, :y => [:red, :green], :z => PermutationSpace(1:3))
+rand(space)
 ```
 
 
@@ -54,10 +106,13 @@ search_space = PermutationSpace([:red, :green, :blue])
 rand(search_space)
 ```
 
+Sampling ten elements: 
+
 ```@example random_sample
 rand(search_space, 10)
 ```
 
+Sampling three elements:
 
 ```@example random_sample
 mixed = MixedSpace(:x => 1:10, :y => [:red, :green], :z => PermutationSpace(1:3))
@@ -135,7 +190,7 @@ argmin(f, GridSampler(searchspace))
 ## Cardinality
 
 The number of elements in a set is known as the [`cardinality`](@ref).
-The package include a method to compute this value:
+The package includes a method to compute this value:
 
 The number of permutation strings of size 3:
 
@@ -181,3 +236,74 @@ space = BoxConstrainedSpace(lb = zeros(3), ub = ones(3))
 
 Note that the last example returned `false` due to the vector of integers is not
 in the `space` of floats.
+
+## Solving the 8-Queens problem
+
+This example illustrates how to finding all solutions for the 8-queens problem.
+
+Let's represent a `chessboard` using an 8-permutation. Here, `chessboard[i] = j` means
+that there is a queen in the row `i` and  column `j`. The main idea is to find all
+chessboard configurations such that the queens are not attacking each other.
+
+```@example basic2
+using SearchSpaces
+
+chessboards = PermutationSpace(8)
+```
+
+A valid chessboard is obtained when any queen is attacking another queen.
+The following function is used to check that:
+
+```@example basic2
+function isvalid(chessboard)
+   # check attack in both diagonas for each queen
+   for i = 1:length(chessboard)
+       Δrows = i + chessboard[i]
+       Δcols = i - chessboard[i]
+       for j = (i+1):length(chessboard)
+           # check diagonals
+           if  j + chessboard[j] == Δrows || j - chessboard[j] == Δcols
+               return false
+           end
+       end
+   end
+   true
+end
+```
+
+
+Now, let's compute all chessboards (valid or not) by brute force using the grid sampler.
+
+```@example basic2
+sampler = GridSampler(chessboards);
+nothing # hide
+```
+
+Once the sampler is instantiated, we can filter those valid chessboards.
+
+```@example basic2
+all_valid_chessboard = filter(isvalid, collect(sampler))
+```
+
+Print resulting chessboard:
+
+```@example basic2
+function print_chessboard(chessboard)
+    println("Chessboard: ", chessboard)
+    for i in eachindex(chessboard)
+        for j in eachindex(chessboard)
+            print(chessboard[i]==j ? "Q " : "_ ")
+        end
+        println()
+    end
+end
+```
+
+```@example basic2
+print_chessboard(first(all_valid_chessboard))
+```
+
+```@example basic2
+print_chessboard(last(all_valid_chessboard))
+```
+
