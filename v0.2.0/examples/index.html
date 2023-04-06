@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Examples · SearchSpaces.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="../assets/extra_styles.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../"><img src="../assets/logo.svg" alt="SearchSpaces.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../">SearchSpaces.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Index</a></li><li><a class="tocitem" href="../searchspaces/">Search Spaces</a></li><li class="is-active"><a class="tocitem" href>Examples</a><ul class="internal"><li><a class="tocitem" href="#Defining-Search-Spaces"><span>Defining Search Spaces</span></a></li><li><a class="tocitem" href="#Sampling-Random-Elements"><span>Sampling Random Elements</span></a></li><li><a class="tocitem" href="#Sampling-All-Elements"><span>Sampling All Elements</span></a></li><li><a class="tocitem" href="#Mixing-Spaces"><span>Mixing Spaces</span></a></li><li><a class="tocitem" href="#Finding-Elements"><span>Finding Elements</span></a></li><li><a class="tocitem" href="#Cardinality"><span>Cardinality</span></a></li><li><a class="tocitem" href="#Is-an-element-in-the-search-space?"><span>Is an element in the search space?</span></a></li><li><a class="tocitem" href="#Solving-the-8-Queens-problem"><span>Solving the 8-Queens problem</span></a></li></ul></li><li><a class="tocitem" href="../api/">API References</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Examples</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Examples</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/jmejia8/SearchSpaces.jl/blob/main/docs/src/examples.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Examples"><a class="docs-heading-anchor" href="#Examples">Examples</a><a id="Examples-1"></a><a class="docs-heading-anchor-permalink" href="#Examples" title="Permalink"></a></h1><p>Some examples on using the package.</p><h2 id="Defining-Search-Spaces"><a class="docs-heading-anchor" href="#Defining-Search-Spaces">Defining Search Spaces</a><a id="Defining-Search-Spaces-1"></a><a class="docs-heading-anchor-permalink" href="#Defining-Search-Spaces" title="Permalink"></a></h2><p>The available search spaces can be defined using different methods, depending on the requirements.</p><h3 id="Permutation-Space"><a class="docs-heading-anchor" href="#Permutation-Space">Permutation Space</a><a id="Permutation-Space-1"></a><a class="docs-heading-anchor-permalink" href="#Permutation-Space" title="Permalink"></a></h3><p>Firstly, import the package.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; using SearchSpaces</code><code class="nohighlight hljs ansi" style="display:block;"></code></pre><p>Define a search space defined by permuting five positive integers <span>$1,2,\ldots, 5$</span>.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = PermutationSpace(5)</code><code class="nohighlight hljs ansi" style="display:block;">PermutationSpace{Vector{Int64}}([1, 2, 3, 4, 5], 5)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; rand(space) # sample one random element</code><code class="nohighlight hljs ansi" style="display:block;">5-element Vector{Int64}:
+ 2
+ 1
+ 5
+ 4
+ 3</code></pre><p>Permutations of an array of elements:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = PermutationSpace([:red, :green, :blue])</code><code class="nohighlight hljs ansi" style="display:block;">PermutationSpace{Vector{Symbol}}([:red, :green, :blue], 3)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; rand(space)</code><code class="nohighlight hljs ansi" style="display:block;">3-element Vector{Symbol}:
+ :green
+ :blue
+ :red</code></pre><p>k-permutation of elements:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; k = 2</code><code class="nohighlight hljs ansi" style="display:block;">2</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = PermutationSpace([:red, :green, :blue, :alpha], k)</code><code class="nohighlight hljs ansi" style="display:block;">PermutationSpace{Vector{Symbol}}([:red, :green, :blue, :alpha], 2)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; rand(space)</code><code class="nohighlight hljs ansi" style="display:block;">2-element Vector{Symbol}:
+ :green
+ :blue</code></pre><h3 id="Bit-arrays"><a class="docs-heading-anchor" href="#Bit-arrays">Bit arrays</a><a id="Bit-arrays-1"></a><a class="docs-heading-anchor-permalink" href="#Bit-arrays" title="Permalink"></a></h3><p>An array of bits can be defining by providing the number of bits:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; n_bits = 4</code><code class="nohighlight hljs ansi" style="display:block;">4</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = BitArraySpace(n_bits)</code><code class="nohighlight hljs ansi" style="display:block;">BitArraySpace(4)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; rand(space)</code><code class="nohighlight hljs ansi" style="display:block;">4-element Vector{Bool}:
+ 0
+ 0
+ 0
+ 1</code></pre><h3 id="Box-Constrained-Space-(Hyperrectangle)"><a class="docs-heading-anchor" href="#Box-Constrained-Space-(Hyperrectangle)">Box-Constrained Space (Hyperrectangle)</a><a id="Box-Constrained-Space-(Hyperrectangle)-1"></a><a class="docs-heading-anchor-permalink" href="#Box-Constrained-Space-(Hyperrectangle)" title="Permalink"></a></h3><p>A box-constrained space (a.k.a. hyperrectangle) is defined by providing lower bounds and lower bounds.</p><p>Defining a 5-dimensional hyperrectangle with vertices in 0 and 1.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = BoxConstrainedSpace(lb = zeros(5), ub = ones(5))</code><code class="nohighlight hljs ansi" style="display:block;">BoxConstrainedSpace{Float64}([0.0, 0.0, 0.0, 0.0, 0.0], [1.0, 1.0, 1.0, 1.0, 1.0], [1.0, 1.0, 1.0, 1.0, 1.0], 5, true)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; rand(space)</code><code class="nohighlight hljs ansi" style="display:block;">5-element Vector{Float64}:
+ 0.9960705772749037
+ 0.8974433545148671
+ 0.9869964864491805
+ 0.6187220310090221
+ 0.5734627475580487</code></pre><p>A 3-dimensional integer box-constrained space with values between -10 and 10.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = BoxConstrainedSpace(lb = fill(-10, 3), ub = fill(10, 3))</code><code class="nohighlight hljs ansi" style="display:block;">BoxConstrainedSpace{Int64}([-10, -10, -10], [10, 10, 10], [20, 20, 20], 3, true)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; rand(space)</code><code class="nohighlight hljs ansi" style="display:block;">3-element Vector{Int64}:
+ -3
+  8
+ -6</code></pre><p>By default, the lower and upper bounds are rigid, one can specify whether the bounds are rigid or not.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = BoxConstrainedSpace(lb = zeros(2), ub = ones(2), rigid=false)</code><code class="nohighlight hljs ansi" style="display:block;">BoxConstrainedSpace{Float64}([0.0, 0.0], [1.0, 1.0], [1.0, 1.0], 2, false)</code></pre><p>An interval can be defined as:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; my_interval = (-π..π)</code><code class="nohighlight hljs ansi" style="display:block;">BoxConstrainedSpace{Float64}([-3.141592653589793], [3.141592653589793], [6.283185307179586], 1, true)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; rand(my_interval)</code><code class="nohighlight hljs ansi" style="display:block;">1.9218607948542896</code></pre><h3 id="Mixed-spaces"><a class="docs-heading-anchor" href="#Mixed-spaces">Mixed spaces</a><a id="Mixed-spaces-1"></a><a class="docs-heading-anchor-permalink" href="#Mixed-spaces" title="Permalink"></a></h3><p>Mixed space can be compose using Cartesian product.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = MixedSpace(:X =&gt; PermutationSpace(3), :Y =&gt; BitArraySpace(3), :Z =&gt; BoxConstrainedSpace(lb = zeros(2), ub = ones(2)))</code><code class="nohighlight hljs ansi" style="display:block;">MixedSpace defined by 3 subspaces:
+X =&gt; PermutationSpace{Vector{Int64}}([1, 2, 3], 3)
+Y =&gt; BitArraySpace(3)
+Z =&gt; BoxConstrainedSpace{Float64}([0.0, 0.0], [1.0, 1.0], [1.0, 1.0], 2, true)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; rand(space)</code><code class="nohighlight hljs ansi" style="display:block;">Dict{Symbol, Vector} with 3 entries:
+  :Z =&gt; [0.146004, 0.390729]
+  :X =&gt; [2, 1, 3]
+  :Y =&gt; Bool[0, 1, 0]</code></pre><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = MixedSpace(:x =&gt; 1:10, :y =&gt; [:red, :green], :z =&gt; PermutationSpace(1:3))</code><code class="nohighlight hljs ansi" style="display:block;">MixedSpace defined by 3 subspaces:
+x =&gt; PermutationSpace{UnitRange{Int64}}(1:10, 1)
+y =&gt; PermutationSpace{Vector{Symbol}}([:red, :green], 1)
+z =&gt; PermutationSpace{UnitRange{Int64}}(1:3, 3)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; rand(space)</code><code class="nohighlight hljs ansi" style="display:block;">Dict{Symbol, Any} with 3 entries:
+  :y =&gt; :green
+  :z =&gt; [3, 2, 1]
+  :x =&gt; 8</code></pre><h2 id="Sampling-Random-Elements"><a class="docs-heading-anchor" href="#Sampling-Random-Elements">Sampling Random Elements</a><a id="Sampling-Random-Elements-1"></a><a class="docs-heading-anchor-permalink" href="#Sampling-Random-Elements" title="Permalink"></a></h2><p>Random elements in a search space can sampled using <a href="../api/#Base.rand-Tuple{Random.AbstractRNG, SearchSpaces.AbstractSearchSpace}"><code>rand</code></a> method.</p><pre><code class="language-julia hljs">search_space = PermutationSpace([:red, :green, :blue])
+rand(search_space)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3-element Vector{Symbol}:
+ :blue
+ :green
+ :red</code></pre><p>Sampling ten elements: </p><pre><code class="language-julia hljs">rand(search_space, 10)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">10-element Vector{Vector{Symbol}}:
+ [:red, :green, :blue]
+ [:blue, :green, :red]
+ [:red, :blue, :green]
+ [:blue, :green, :red]
+ [:blue, :green, :red]
+ [:red, :green, :blue]
+ [:green, :blue, :red]
+ [:green, :blue, :red]
+ [:red, :blue, :green]
+ [:red, :green, :blue]</code></pre><p>Sampling three elements:</p><pre><code class="language-julia hljs">mixed = MixedSpace(:x =&gt; 1:10, :y =&gt; [:red, :green], :z =&gt; PermutationSpace(1:3))
+rand(mixed, 3)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3-element Vector{Dict{Symbol, Any}}:
+ Dict(:y =&gt; :green, :z =&gt; [2, 1, 3], :x =&gt; 8)
+ Dict(:y =&gt; :red, :z =&gt; [1, 2, 3], :x =&gt; 4)
+ Dict(:y =&gt; :red, :z =&gt; [3, 1, 2], :x =&gt; 1)</code></pre><h2 id="Sampling-All-Elements"><a class="docs-heading-anchor" href="#Sampling-All-Elements">Sampling All Elements</a><a id="Sampling-All-Elements-1"></a><a class="docs-heading-anchor-permalink" href="#Sampling-All-Elements" title="Permalink"></a></h2><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>Sampling and collecting all elements in search space can overflow memory.</p></div></div><p>Implemented samplers return an iterator to avoid memory overflow.</p><pre><code class="language-julia hljs">search_space = PermutationSpace([:red, :green, :blue])
+for x in GridSampler(search_space)
+    @show x
+end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">x = [:red, :green, :blue]
+x = [:red, :blue, :green]
+x = [:green, :red, :blue]
+x = [:green, :blue, :red]
+x = [:blue, :red, :green]
+x = [:blue, :green, :red]</code></pre><p>Similarly:</p><pre><code class="language-julia hljs">GridSampler(PermutationSpace([:red, :green, :blue])) |&gt; collect</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">6-element Vector{Any}:
+ [:red, :green, :blue]
+ [:red, :blue, :green]
+ [:green, :red, :blue]
+ [:green, :blue, :red]
+ [:blue, :red, :green]
+ [:blue, :green, :red]</code></pre><h2 id="Mixing-Spaces"><a class="docs-heading-anchor" href="#Mixing-Spaces">Mixing Spaces</a><a id="Mixing-Spaces-1"></a><a class="docs-heading-anchor-permalink" href="#Mixing-Spaces" title="Permalink"></a></h2><p>We can mix spaces via <a href="https://en.wikipedia.org/wiki/Cartesian_product">Cartesian product</a>.</p><pre><code class="language-julia hljs">bounds = BoxConstrainedSpace(lb = zeros(Int, 5), ub = ones(Int, 5))
+permutations = PermutationSpace([:red, :green, :blue])
+bits = BitArraySpace(3)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">BitArraySpace(3)</code></pre><p>Performing Cartesian product:</p><pre><code class="language-julia hljs">mixed = bounds × permutations × bits</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">MixedSpace defined by 3 subspaces:
+S3 =&gt; BitArraySpace(3)
+S2 =&gt; PermutationSpace{Vector{Symbol}}([:red, :green, :blue], 3)
+S1 =&gt; BoxConstrainedSpace{Int64}([0, 0, 0, 0, 0], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], 5, true)
+</code></pre><p>Sampling a random element:</p><pre><code class="language-julia hljs">rand(mixed)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Dict{Symbol, Vector} with 3 entries:
+  :S2 =&gt; [:green, :blue, :red]
+  :S1 =&gt; [1, 1, 1, 1, 0]
+  :S3 =&gt; Bool[0, 1, 0]</code></pre><p>Cardinality (number of elements)</p><pre><code class="language-julia hljs">cardinality(mixed)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">1536</code></pre><h2 id="Finding-Elements"><a class="docs-heading-anchor" href="#Finding-Elements">Finding Elements</a><a id="Finding-Elements-1"></a><a class="docs-heading-anchor-permalink" href="#Finding-Elements" title="Permalink"></a></h2><p>A search space is only a place where certain items are. However, those elements appear under the presence of a sampler. Let&#39;s find the argument that minimizes function.</p><p>Finding the argument that minimizes a given function.</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; searchspace = MixedSpace(
+                           :N    =&gt; 1:50,
+                           :flag =&gt; [true, false],
+                           :p    =&gt; BoxConstrainedSpace(0.0, 1)
+                           );</code><code class="nohighlight hljs ansi" style="display:block;"></code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; f(x) = x[:flag] ? sum(1:x[:N])-x[:p] : x[:p] + sum(1:x[:N])</code><code class="nohighlight hljs ansi" style="display:block;">f (generic function with 1 method)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; argmin(f, GridSampler(searchspace))</code><code class="nohighlight hljs ansi" style="display:block;">Dict{Symbol, Real} with 3 entries:
+  :N    =&gt; 1
+  :p    =&gt; 1.0
+  :flag =&gt; true</code></pre><h2 id="Cardinality"><a class="docs-heading-anchor" href="#Cardinality">Cardinality</a><a id="Cardinality-1"></a><a class="docs-heading-anchor-permalink" href="#Cardinality" title="Permalink"></a></h2><p>The number of elements in a set is known as the <a href="../api/#SearchSpaces.cardinality"><code>cardinality</code></a>. The package includes a method to compute this value:</p><p>The number of permutation strings of size 3:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = PermutationSpace([:red, :green, :blue])</code><code class="nohighlight hljs ansi" style="display:block;">PermutationSpace{Vector{Symbol}}([:red, :green, :blue], 3)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; cardinality(space)</code><code class="nohighlight hljs ansi" style="display:block;">6</code></pre><p>The number of bit arrays of size 10:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = BitArraySpace(10)</code><code class="nohighlight hljs ansi" style="display:block;">BitArraySpace(10)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; cardinality(space)</code><code class="nohighlight hljs ansi" style="display:block;">1024</code></pre><p>Number of 5-dimensional arrays of integers:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = BoxConstrainedSpace(lb = zeros(Int, 5), ub = ones(Int, 5))</code><code class="nohighlight hljs ansi" style="display:block;">BoxConstrainedSpace{Int64}([0, 0, 0, 0, 0], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], 5, true)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; cardinality(space)</code><code class="nohighlight hljs ansi" style="display:block;">32</code></pre><p>Number of 5-dimensional arrays of Floats:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = BoxConstrainedSpace(lb = zeros(5), ub = ones(5))</code><code class="nohighlight hljs ansi" style="display:block;">BoxConstrainedSpace{Float64}([0.0, 0.0, 0.0, 0.0, 0.0], [1.0, 1.0, 1.0, 1.0, 1.0], [1.0, 1.0, 1.0, 1.0, 1.0], 5, true)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; cardinality(space)</code><code class="nohighlight hljs ansi" style="display:block;">Inf</code></pre><h2 id="Is-an-element-in-the-search-space?"><a class="docs-heading-anchor" href="#Is-an-element-in-the-search-space?">Is an element in the search space?</a><a id="Is-an-element-in-the-search-space?-1"></a><a class="docs-heading-anchor-permalink" href="#Is-an-element-in-the-search-space?" title="Permalink"></a></h2><p>Once a search space is defined, maybe we would like to know whether an element is in the search space. We can use the <a href="../api/#Base.in-Tuple{Any, SearchSpaces.AbstractSearchSpace}"><code>in</code></a> method:</p><pre><code class="language-julia-repl hljs" style="display:block;">julia&gt; space = BoxConstrainedSpace(lb = zeros(3), ub = ones(3))</code><code class="nohighlight hljs ansi" style="display:block;">BoxConstrainedSpace{Float64}([0.0, 0.0, 0.0], [1.0, 1.0, 1.0], [1.0, 1.0, 1.0], 3, true)</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; [0.0, 0, 0] in space</code><code class="nohighlight hljs ansi" style="display:block;">true</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; [100.0, 0, 0] in space</code><code class="nohighlight hljs ansi" style="display:block;">false</code><br/><code class="language-julia-repl hljs" style="display:block;">julia&gt; [1, 1, 1] in space</code><code class="nohighlight hljs ansi" style="display:block;">false</code></pre><p>Note that the last example returned <code>false</code> due to the vector of integers is not in the <code>space</code> of floats.</p><h2 id="Solving-the-8-Queens-problem"><a class="docs-heading-anchor" href="#Solving-the-8-Queens-problem">Solving the 8-Queens problem</a><a id="Solving-the-8-Queens-problem-1"></a><a class="docs-heading-anchor-permalink" href="#Solving-the-8-Queens-problem" title="Permalink"></a></h2><p>This example illustrates how to finding all solutions for the 8-queens problem.</p><p>Let&#39;s represent a <code>chessboard</code> using an 8-permutation. Here, <code>chessboard[i] = j</code> means that there is a queen in the row <code>i</code> and  column <code>j</code>. The main idea is to find all chessboard configurations such that the queens are not attacking each other.</p><pre><code class="language-julia hljs">using SearchSpaces
+
+chessboards = PermutationSpace(8)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">PermutationSpace{Vector{Int64}}([1, 2, 3, 4, 5, 6, 7, 8], 8)</code></pre><p>A valid chessboard is obtained when any queen is attacking another queen. The following function is used to check that:</p><pre><code class="language-julia hljs">function isvalid(chessboard)
+   # check attack in both diagonas for each queen
+   for i = 1:length(chessboard)
+       Δrows = i + chessboard[i]
+       Δcols = i - chessboard[i]
+       for j = (i+1):length(chessboard)
+           # check diagonals
+           if  j + chessboard[j] == Δrows || j - chessboard[j] == Δcols
+               return false
+           end
+       end
+   end
+   true
+end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">isvalid (generic function with 1 method)</code></pre><p>Now, let&#39;s compute all chessboards (valid or not) by brute force using the grid sampler.</p><pre><code class="language-julia hljs">sampler = GridSampler(chessboards);</code></pre><p>Once the sampler is instantiated, we can filter those valid chessboards.</p><pre><code class="language-julia hljs">all_valid_chessboard = filter(isvalid, collect(sampler))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">92-element Vector{Any}:
+ [1, 5, 8, 6, 3, 7, 2, 4]
+ [1, 6, 8, 3, 7, 4, 2, 5]
+ [1, 7, 4, 6, 8, 2, 5, 3]
+ [1, 7, 5, 8, 2, 4, 6, 3]
+ [2, 4, 6, 8, 3, 1, 7, 5]
+ [2, 5, 7, 1, 3, 8, 6, 4]
+ [2, 5, 7, 4, 1, 8, 6, 3]
+ [2, 6, 1, 7, 4, 8, 3, 5]
+ [2, 6, 8, 3, 1, 4, 7, 5]
+ [2, 7, 3, 6, 8, 5, 1, 4]
+ ⋮
+ [7, 3, 1, 6, 8, 5, 2, 4]
+ [7, 3, 8, 2, 5, 1, 6, 4]
+ [7, 4, 2, 5, 8, 1, 3, 6]
+ [7, 4, 2, 8, 6, 1, 3, 5]
+ [7, 5, 3, 1, 6, 8, 2, 4]
+ [8, 2, 4, 1, 7, 5, 3, 6]
+ [8, 2, 5, 3, 1, 7, 4, 6]
+ [8, 3, 1, 6, 2, 5, 7, 4]
+ [8, 4, 1, 3, 6, 2, 7, 5]</code></pre><p>Print resulting chessboard:</p><pre><code class="language-julia hljs">function print_chessboard(chessboard)
+    println(&quot;Chessboard: &quot;, chessboard)
+    for i in eachindex(chessboard)
+        for j in eachindex(chessboard)
+            print(chessboard[i]==j ? &quot;Q &quot; : &quot;_ &quot;)
+        end
+        println()
+    end
+end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">print_chessboard (generic function with 1 method)</code></pre><pre><code class="language-julia hljs">print_chessboard(first(all_valid_chessboard))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Chessboard: [1, 5, 8, 6, 3, 7, 2, 4]
+Q _ _ _ _ _ _ _
+_ _ _ _ Q _ _ _
+_ _ _ _ _ _ _ Q
+_ _ _ _ _ Q _ _
+_ _ Q _ _ _ _ _
+_ _ _ _ _ _ Q _
+_ Q _ _ _ _ _ _
+_ _ _ Q _ _ _ _</code></pre><pre><code class="language-julia hljs">print_chessboard(last(all_valid_chessboard))</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Chessboard: [8, 4, 1, 3, 6, 2, 7, 5]
+_ _ _ _ _ _ _ Q
+_ _ _ Q _ _ _ _
+Q _ _ _ _ _ _ _
+_ _ Q _ _ _ _ _
+_ _ _ _ _ Q _ _
+_ Q _ _ _ _ _ _
+_ _ _ _ _ _ Q _
+_ _ _ _ Q _ _ _</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../searchspaces/">« Search Spaces</a><a class="docs-footer-nextpage" href="../api/">API References »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.24 on <span class="colophon-date" title="Thursday 6 April 2023 14:18">Thursday 6 April 2023</span>. Using Julia version 1.7.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
