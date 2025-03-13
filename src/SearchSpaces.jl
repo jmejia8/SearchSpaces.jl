@@ -18,5 +18,5 @@ export ×
 export ..
 export iscombination
 export BoxConstrainedSpace,PermutationSpace,BitArraySpace,CategorySpace, CombinationSpace
-
+export PolygonConstrainedSpace
 end
