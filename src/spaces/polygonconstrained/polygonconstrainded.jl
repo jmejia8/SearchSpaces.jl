@@ -29,6 +29,7 @@ function segments_intersect(A, B, C, D)
     return ((cross_product(B - A, C - A) * cross_product(B - A, D - A)) ≤ 0) &&
            ((cross_product(D - C, A - C) * cross_product(D - C, B - C)) ≤ 0)
 end
+
 function cardinality(searchspace::PolygonConstrainedSpace)
     Inf
 end
