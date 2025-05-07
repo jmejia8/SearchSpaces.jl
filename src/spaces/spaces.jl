@@ -15,5 +15,5 @@ include("combination/samplers.jl")
 include("mixed/mixed.jl")
 include("mixed/samplers.jl")
 
-include("Polygonconstrained/Polygonconstrained.jl")
-include("Polygonconstrained/samplers.jl")
+include("polygonconstrained/polygonconstrainded.jl")
+include("polygonconstrained/samplers.jl")
